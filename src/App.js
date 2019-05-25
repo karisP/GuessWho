@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import './App.css';
 import Character from './components/Character/Character';
+import Question from './components/Question/Question';
 import harry from './images/harry.jpg';
 import hermione from './images/hermione.jpg';
 import ron from './images/ron.jpg';
@@ -14,6 +15,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1>Guess Who?!?</h1>
+          <div className="outer">
           <div className="wrapper">
           {this.state.characters.map((character, index) =>{
             return(
@@ -21,7 +23,9 @@ class App extends Component {
             )
           })}
           </div>
-      
+          <Question/>
+          </div>
+         
         </header>
       </div>
     );
