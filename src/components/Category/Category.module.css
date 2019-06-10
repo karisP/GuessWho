@@ -1,3 +1,17 @@
+.category{
+    border-bottom: 1px solid grey;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.category:last-child{
+    border: none;
+}
+
+.title{
+    margin: 10px;
+    font-size: 14px;
+}
 button{
     color: slateblue;
     background-color: white;

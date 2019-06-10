@@ -1,3 +1,7 @@
 .Question{
-    border: 2px solid white;
+    border: 1px solid white;
+    margin: 20px;
+    border-radius: 10px;
+    color: black;
+    background-color: white;
 }
