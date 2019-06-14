@@ -4,7 +4,7 @@ const Chat = (props) => {
     return(
 
     <div className={styles.Chat}>
-        You have selected {props.attribute}
+        You have selected {props.attribute}<span>{props.category}</span>
     </div>
 
     )
