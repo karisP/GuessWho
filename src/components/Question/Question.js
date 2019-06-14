@@ -11,7 +11,7 @@ class Question extends Component {
           { id: 2, title: "Age", buttons: [{ text: "Child" }, { text: "Adult" }, { text: "Elderly" } ]}, 
           { id: 3, title: "Gender", buttons: [{ text: "Male" }, { text: "Female" }, { text: "Uncertain" }]}
         ],
-        selected: undefined,
+        selectedCategoryId: undefined,
         selectedCategoryTitle: undefined,
         selectedAttribute: null,
         hidden: true,
@@ -19,7 +19,7 @@ class Question extends Component {
     }
 
     isSelected (category) {
-        this.setState({ selected: category.id, selectedCategoryTitle: category.title });
+        this.setState({ selectedCategoryId: category.id, selectedCategoryTitle: category.title });
     }
 
     toggleCategory = () => {
@@ -44,14 +44,14 @@ class Question extends Component {
                         onSelectButton={this.handleButton} 
                         onClick={() => {this.isSelected(category); this.toggleCategory();}} 
                         hide={this.state.hidden} 
-                        selectedId={this.state.selected}
+                        selectedId={this.state.selectedCategoryId}
                         handleAttribute={this.handleAttribute}
                         />
                     )
                 })
                 }
 
-                <Chat attribute={this.state.selectedAttribute} category={this.state.selectedCategoryTitle}/>
+                <Chat attribute={this.state.selectedAttribute} categoryTitle={this.state.selectedCategoryTitle} categoryId={this.state.selectedCategoryId}/>
             </div>
         )
 
