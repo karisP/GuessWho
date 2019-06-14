@@ -12,17 +12,21 @@ class Question extends Component {
           { id: 3, title: "Gender", buttons: [{ text: "Male" }, { text: "Female" }, { text: "Uncertain" }]}
         ],
         selected: undefined,
-        hidden: true
+        selectedAttribute: null,
+        hidden: true,
        
     }
 
     isSelected (id) {
-        this.setState({ selected: id }, () => { 
-          console.log(this.state.selected) })
-      }
+        this.setState({ selected: id });
+    }
 
     toggleCategory = () => {
         this.setState({hidden: !this.state.hidden});
+    }
+
+    handleAttribute = (e) => {
+        this.setState({selectedAttribute: e}, () => console.log(this.state.selectedAttribute));
     }
 
     render() {
@@ -30,12 +34,23 @@ class Question extends Component {
             <div className={classes.Question}>
                 <p>Ask Me a Question</p>
                 {this.state.categories.map((category, id) => {
-                    return (<Category key={id} id={id} title={category.title} buttons={category.buttons} onSelectButton={this.handleButton} onClick={() => {this.isSelected(category.id); this.toggleCategory();}} hide={this.state.hidden} selectedId={this.state.selected}/>
+                    return (
+                    <Category
+                        key={id}
+                        id={id} 
+                        title={category.title} 
+                        buttons={category.buttons} 
+                        onSelectButton={this.handleButton} 
+                        onClick={() => {this.isSelected(category.id); this.toggleCategory();}} 
+                        hide={this.state.hidden} 
+                        selectedId={this.state.selected}
+                        handleAttribute={this.handleAttribute}
+                        />
                     )
                 })
                 }
 
-                <Chat/>
+                <Chat attribute={this.state.selectedAttribute}/>
             </div>
         )
 

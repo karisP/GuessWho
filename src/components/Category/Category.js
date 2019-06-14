@@ -10,17 +10,19 @@ class Category extends Component {
     }
 
 
-  render() {
-      return(
-          <div className={classes.category} onClick={this.props.onClick}>
+    render() {
+        return(
+            <div className={classes.category} onClick={this.props.onClick}>
               <p className={classes.title}>{this.props.title}</p>
               {this.props.id === this.props.selectedId ?
                   this.props.hide?
                   "":
-                 this.props.buttons.map((button, index) => {
-                  return(
-                     <button type='button' key={index}>{button.text}</button> 
-                   )
+                  this.props.buttons.map((button, index) => {
+                
+                      return(
+                          <button type='button' key={index} value={button.text} onClick={()=>this.props.handleAttribute(`${button.text}`)} >{button.text}
+                          </button> 
+                          )
                   })
                  
                  : ""     
