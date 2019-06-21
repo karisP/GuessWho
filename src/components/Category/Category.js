@@ -20,7 +20,12 @@ class Category extends Component {
                   this.props.buttons.map((button, index) => {
                 
                       return(
-                          <button type='button' key={index} value={button.text} onClick={()=>this.props.handleAttribute(`${button.text}`)} >{button.text}
+                          <button 
+                            type='button' 
+                            key={index} 
+                            value={button.text} 
+                            onClick={()=>this.props.handleAttribute(`${button.text}`)}>
+                            {button.text}
                           </button> 
                           )
                   })

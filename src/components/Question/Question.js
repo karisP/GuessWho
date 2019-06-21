@@ -15,7 +15,8 @@ class Question extends Component {
         selectedCategoryTitle: undefined,
         selectedAttribute: null,
         hidden: true,
-       
+        submittedQuestion: null,
+        response: "yes"
     }
 
     isSelected (category) {
@@ -29,6 +30,15 @@ class Question extends Component {
     handleAttribute = (e) => {
         this.setState({selectedAttribute: e}, () => console.log(this.state.selectedAttribute));
     }
+
+    submitQuestion = (e) => {
+        this.setState({submittedQuestion: e}, () => console.log(this.state.submittedQuestion));
+    }
+
+    clearQuestion = () => {
+        this.setState({selectedAttribute: null, selectedCategoryTitle: undefined, hidden: true, submittedQuestion: null});
+    }
+
 
     render() {
         return (
@@ -51,7 +61,15 @@ class Question extends Component {
                 })
                 }
 
-                <Chat attribute={this.state.selectedAttribute} categoryTitle={this.state.selectedCategoryTitle} categoryId={this.state.selectedCategoryId}/>
+                <Chat
+                    attribute={this.state.selectedAttribute}
+                    categoryTitle={this.state.selectedCategoryTitle} 
+                    categoryId={this.state.selectedCategoryId}
+                    submitQuestion={this.submitQuestion}
+                    clearQuestion={this.clearQuestion}
+                    answer={this.state.response}
+                    submittedQuestion={this.state.submittedQuestion}
+                    />
             </div>
         )
 
