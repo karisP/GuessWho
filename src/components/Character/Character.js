@@ -14,16 +14,21 @@ class Character extends Component{
         this.setState({flipped:!this.state.flipped});
         console.log(this.state.flipped);
     }
+    divStyle = {
+      backgroundImage: 'url(' + this.props.img + ')',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }
     render(){
         return(
             <div className={styles.flipBox} onClick={()=>this.flipCard()}>
             <div className={this.state.flipped? `${styles.flipOver} ${styles.flipBoxInner}`:styles.flipBoxInner}>
-              <div className={styles.flipBoxFront}>
-                <img src={this.props.img} alt=""/>
+              <div className={styles.flipBoxFront} style={this.divStyle}>
+                
+                <p className={styles.name}>{this.props.name}</p>
               </div>
               <div className={styles.flipBoxBack}>
                 <h2>Guess Who?!?</h2>
-                <p>{this.props.name}</p>
               </div>
             </div>
           </div>

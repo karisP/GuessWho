@@ -44,3 +44,17 @@
     color: white;
     transform: rotateY(180deg);
   }
+
+  .name{
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    color:black;
+    margin-bottom: 0px;
+    padding: 2px;
+    width: 100%;
+    font-family: 'Gochi Hand', cursive;
+
+  }
