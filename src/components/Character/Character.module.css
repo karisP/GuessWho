@@ -40,8 +40,6 @@
   
   
   .flipBoxBack {
-    background-color: #555;
-    color: white;
     transform: rotateY(180deg);
   }
 
@@ -54,7 +52,7 @@
     color:black;
     margin-bottom: 0px;
     padding: 2px;
-    width: 100%;
+    width: 146px;
     font-family: 'Gochi Hand', cursive;
 
   }

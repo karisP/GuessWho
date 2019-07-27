@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import styles from './Character.module.css';
-
+import cardback from '../../images/harry_potter/cardback.png';
 class Character extends Component{
     constructor(props){
         super(props);
@@ -28,7 +28,7 @@ class Character extends Component{
                 <p className={styles.name}>{this.props.name}</p>
               </div>
               <div className={styles.flipBoxBack}>
-                <h2>Guess Who?!?</h2>
+                <img src={cardback} alt="cardback"/>
               </div>
             </div>
           </div>
