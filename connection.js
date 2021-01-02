@@ -1,12 +1,26 @@
 "use strict";
-const pg = require("pg");
-const pool = {
+const Pool = require('pg').Pool;
+const pool = new Pool({
     user: "postgres",
     password: "password",
     host: "localhost",
     port: 5432 ,
-    database: "postgres",
+    database: "guesswho",
     ssl: false
-};
+});
 
-module.exports = new pg.Pool(pool);
+const getCharacters = () => {
+    return new Promise(function(resolve, reject) {
+      pool.query('SELECT * FROM harry_potter ORDER BY id ASC', (error, results) => {
+          console.log(error, results);
+        if (error) {
+          reject(error)
+        }
+        resolve(results.rows);
+      })
+    }) 
+  }
+
+module.exports = {
+    getCharacters
+};
