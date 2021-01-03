@@ -35,21 +35,41 @@ interface Character
 
 }
 
+export interface ICharacter{
+  id: number;
+  name: string;
+  age: string;
+  accessory: string;
+  facial_attr: string;
+  facial_hair: string;
+  gender: string;
+  hair_color: string;
+  hair_length: string;
+  hair_type: string;
+  more: string;
+  species: string;
+}
+
+function api<T>(url: string): Promise<T> {
+  return fetch(url)
+  .then(response => {
+    if(!response.ok){
+      const errorMessage = 'Error loading data from' + url;
+      return Promise.reject(errorMessage);
+    }
+    return response.json().then(data => data as T);
+  })
+}
+
 const App = () => {
-  //const [dbcharacters, setDbCharacters] = React.useState<string>('');
+  const [dbCharacter, setDbCharacter] = React.useState<ICharacter | null>(null);
   React.useEffect(() => {
-    getCharacters();
-  }, []);
-  function getCharacters() {
-    fetch('http://localhost:3001')
-    .then(response => {
-      return response.text();
+    api<ICharacter[]>('http://localhost:3001').then(data => {
+      let randomInt = Math.floor(Math.random() * 10); 
+      setDbCharacter(data[randomInt]);
     })
-    .then(data => {
-        console.log(data);
-        //setDbCharacters(data);
-      });
-  }
+  }, []);
+  
 
     const characters = [{ name: "Harry", img: harry },
       { name: "Hermione", img: hermione },
@@ -89,7 +109,7 @@ const App = () => {
               })}
             </div>
             <div className="sidebar">
-              <Question />
+              <Question character={dbCharacter} />
             </div>
           </div>
 
@@ -98,4 +118,5 @@ const App = () => {
     );
 
 }
+
 export default App;

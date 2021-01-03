@@ -6,7 +6,7 @@ interface IProps {
     category: { id: number, title: string } | undefined;
     submitQuestion: (attribute: string) => void;
     clearQuestion: () => void;
-    answer: string;
+    answer: boolean;
     submittedQuestion: string | null;
 
 }
@@ -29,7 +29,7 @@ const Chat = (props: IProps) => {
                         <button onClick={() => props.clearQuestion()}>No</button>
                     </div>
                     {props.submittedQuestion !== null ?
-                        <div>{props.answer}</div>
+                        <div>{props.answer === true ? "yes" : "no"}</div>
                         :
                         null
                     }
