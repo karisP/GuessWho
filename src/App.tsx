@@ -69,7 +69,7 @@ const App = () => {
       setDbCharacter(data[randomInt]);
     })
   }, []);
-  
+  console.log(dbCharacter);
 
     const characters = [{ name: "Harry", img: harry },
       { name: "Hermione", img: hermione },

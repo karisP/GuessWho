@@ -8,13 +8,17 @@ interface IProps {
     clearQuestion: () => void;
     answer: boolean;
     submittedQuestion: string | null;
-
+    onSubmitFinal: () => void;
+    onChangeFinal: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    finalAnswer: string;
+    win: boolean | null;
 }
 const Chat = (props: IProps) => {
     const questions = [
         `Do you want to know if my character has ${props.attribute} ${props.category ? props.category.title : ''}?`,
         `Do you want to know if my character wears ${props.attribute}?`,
         `Do you want to know if my character is ${props.attribute}?`,
+        `Do you want to know if my character is of the ${props.attribute} ${props.category ? props.category.title : ''}?`,
         `Do you want to know if my character is of the ${props.attribute} ${props.category ? props.category.title : ''}?`
     ]
 
@@ -33,7 +37,15 @@ const Chat = (props: IProps) => {
                         :
                         null
                     }
-                    <input placeholder="Enter your final guess"></input>
+
+                    <input placeholder="Enter your final guess" value={props.finalAnswer} onChange={(e) => props.onChangeFinal(e)}></input>
+                    <button type="button" onClick={props.onSubmitFinal}>Submit</button>
+
+                    {props.win !== null ?
+                        <div>{props.win === true ? "You've WON!!" : "Try Again"}</div>
+                        :
+                        null
+                    }
                 </div>
                 :
                 ""
