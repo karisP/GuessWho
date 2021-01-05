@@ -6,6 +6,8 @@ import { ICharacter } from '../../App';
 
 interface IProps{
     character: ICharacter | null;
+    onWin: (win: boolean) => void;
+    win: boolean | null;
 }
 
 const Question = (props: IProps) => {
@@ -15,7 +17,6 @@ const Question = (props: IProps) => {
     const [submittedQuestion, setSubmittedQuestion] = React.useState<string | null>(null);
     const [response, setResponse] = React.useState<boolean>(false);
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
-    const [win, setWin] = React.useState<boolean | null>(null);
 
     const categories = [{ id: 0, title: "Hair Color", buttons: [{ text: "Blonde" }, { text: "Brown" }, { text: "Black" }, { text: "Red" }, { text: "Gray" }]},
     { id: 1, title: "Accessories", buttons: [{ text: "Glasses" }, { text: "Hat" }, { text: "Necklace" }] },
@@ -67,9 +68,9 @@ const Question = (props: IProps) => {
     const onSubmitFinal = () => {
         console.log(finalAnswer, props.character ? props.character.name : null);
         if(props.character && (finalAnswer.toLowerCase() === props.character.name.toLowerCase())){
-            setWin(true);
+            props.onWin(true);
         }else{
-            setWin(false);
+            props.onWin(false);
         }
     }
 
@@ -102,7 +103,7 @@ const Question = (props: IProps) => {
                     onSubmitFinal={onSubmitFinal}
                     onChangeFinal={onChangeFinal}
                     finalAnswer={finalAnswer}
-                    win={win}
+                    win={props.win}
                     />
             </div>
         )

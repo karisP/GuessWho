@@ -27,6 +27,7 @@ import lupin from './images/harry_potter/lupin.jpg';
 import trelawney from './images/harry_potter/trelawney.jpg';
 import myrtle from './images/harry_potter/myrtle.jpg';
 import moody from './images/harry_potter/moody.jpg';
+import Modal from './components/Modal/Modal';
 
 interface Character
 {
@@ -63,6 +64,8 @@ function api<T>(url: string): Promise<T> {
 
 const App = () => {
   const [dbCharacter, setDbCharacter] = React.useState<ICharacter | null>(null);
+  const [win, setWin] = React.useState<boolean | null>(null);
+
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
       let randomInt = Math.floor(Math.random() * 10); 
@@ -96,8 +99,17 @@ const App = () => {
       { name: "Myrtle", img: myrtle }, 
       { name: "Moody", img: moody } ]
 
+    const onWin = (win:boolean) => {
+      setWin(win);
+    }
+
+    const onStartNewGame = () =>{
+      setWin(null);
+    }
+
     return (
       <div className="App">
+        {win ? <Modal onStartNewGame={onStartNewGame} dbCharacter={dbCharacter}/> : null}
         <header className="App-header">
           <h1>Guess Hoot</h1>
           <div className="outer">
@@ -109,7 +121,7 @@ const App = () => {
               })}
             </div>
             <div className="sidebar">
-              <Question character={dbCharacter} />
+              <Question character={dbCharacter} onWin={onWin} win={win}/>
             </div>
           </div>
 

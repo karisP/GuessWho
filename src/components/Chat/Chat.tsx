@@ -42,7 +42,7 @@ const Chat = (props: IProps) => {
                     <button type="button" onClick={props.onSubmitFinal}>Submit</button>
 
                     {props.win !== null ?
-                        <div>{props.win === true ? "You've WON!!" : "Try Again"}</div>
+                        <div>{!props.win ? "Try Again" : null}</div>
                         :
                         null
                     }
