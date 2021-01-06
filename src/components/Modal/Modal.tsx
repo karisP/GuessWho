@@ -11,15 +11,15 @@ interface IProps{
 const Modal = (props: IProps) => {
     
     return(
-        <div className={styles.container}>
+        <div className={styles.container} onClick={props.onStartNewGame}>
             <div className={styles.message}>
                 <img src={cardback} alt=""/>
-                <div>You've guessed {props.dbCharacter ? props.dbCharacter.name : "WHO"} correctly!
-                YOU'VE WON! 50 points to your house!</div>
+                <div>
+                    <p>You've guessed {props.dbCharacter ? props.dbCharacter.name : "WHO"} correctly!</p>
+                    <p>YOU'VE WON! 50 points to your house!</p>
+                    <button type="button" onClick={props.onStartNewGame}>New Game</button>
+                </div>
             </div>
-            <form onSubmit={props.onStartNewGame}>
-                <button type="submit">New Game</button>
-            </form>
         </div>
     )
 }
