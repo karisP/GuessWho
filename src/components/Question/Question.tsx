@@ -22,7 +22,13 @@ const Question = (props: IProps) => {
     { id: 1, title: "Accessories", buttons: [{ text: "Glasses" }, { text: "Hat" }, { text: "Necklace" }] },
      { id: 2, title: "Age", buttons: [{ text: "Child" }, { text: "Adult" }, { text: "Elderly" } ]}, 
      { id: 3, title: "Gender", buttons: [{ text: "Male" }, { text: "Female" }, { text: "Uncertain" }]},
-     { id: 4, title: "Species", buttons: [{ text: "Human" }, { text: "Animal" }, { text: "Uncertain" }]}
+     { id: 4, title: "Species", buttons: [{ text: "Human" }, { text: "Animal" }, { text: "Uncertain" }]},
+     { id: 5, title: "Role", buttons: [{ text: "Staff" }, { text: "Student" }, {text:"Servant"}]},
+     { id: 6, title: "Facial Hair", buttons: [{ text: "Yes" }, { text: "No" }]},
+     { id: 7, title: "House", buttons: [{ text: "Griffindor" }, { text: "Slytherin" }, { text: "Ravenclaw" }, {text: "Hufflepuff"}]},
+     { id: 8, title: "Hair Length", buttons: [{ text: "Long" }, { text: "Medium" }, { text: "Short" }, {text: "Bald"}]},
+     { id: 9, title: "Hair Texture", buttons: [{ text: "Straight" }, { text: "Curly" }, { text: "Feathers" }]},
+     { id: 10, title: "Defining Feature", buttons: [{ text: "Eye" }, { text: "Nose" }, { text: "Beak" }]}
    ]
     const isSelected = (category : {id: number, title: string}) => {
         setSelectedCategory({ id: category.id, title: category.title });
@@ -51,6 +57,18 @@ const Question = (props: IProps) => {
                 setResponse(selectedAttribute.toLowerCase() === props.character.gender);
             } else if(selectedCategory.id === 4){
                 setResponse(selectedAttribute.toLowerCase() === props.character.species);
+            // } else if(selectedCategory.id === 5){
+            //     setResponse(selectedAttribute.toLowerCase() === props.character.role);
+            } else if(selectedCategory.id === 6){
+                setResponse(selectedAttribute.toLowerCase() === props.character.facial_hair);
+            } else if(selectedCategory.id === 7){
+                setResponse(selectedAttribute.toLowerCase() === props.character.house);
+            } else if(selectedCategory.id === 8){
+                setResponse(selectedAttribute.toLowerCase() === props.character.hair_length);
+            } else if(selectedCategory.id === 9){
+                setResponse(selectedAttribute.toLowerCase() === props.character.hair_type);
+            } else if(selectedCategory.id === 10){
+                setResponse(selectedAttribute.toLowerCase() === props.character.facial_attr);
             }
         }
     }

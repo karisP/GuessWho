@@ -49,6 +49,8 @@ export interface ICharacter{
   hair_type: string;
   more: string;
   species: string;
+  role: string;
+  house: string;
 }
 
 function api<T>(url: string): Promise<T> {
