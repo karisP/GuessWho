@@ -3,7 +3,7 @@ import styles from './Chat.module.css';
 
 interface IProps {
     attribute: string | null;
-    category: { id: number, title: string } | undefined;
+    category: { id: number, title: string, questionId: number } | undefined;
     submitQuestion: (attribute: string) => void;
     clearQuestion: () => void;
     answer: boolean;
@@ -19,7 +19,10 @@ const Chat = (props: IProps) => {
         `Do you want to know if my character wears ${props.attribute}?`,
         `Do you want to know if my character is ${props.attribute}?`,
         `Do you want to know if my character is of the ${props.attribute} ${props.category ? props.category.title : ''}?`,
-        `Do you want to know if my character is of the ${props.attribute} ${props.category ? props.category.title : ''}?`
+        `Do you want to know if my character is a ${props.attribute}?`,
+        `Do you want to know if my character has ${props.category ? props.category.title : ''}?`,
+        `Do you want to know if my character's ${props.attribute} is a ${props.category ? props.category.title : ''}?`,
+
     ]
 
     return (
@@ -27,7 +30,7 @@ const Chat = (props: IProps) => {
         <div className={styles.Chat}>
             {props.attribute !== null ?
                 <div className={styles.chatbox}>
-                    {props.category ? questions[props.category.id] : null}
+                    {props.category ? questions[props.category.questionId] : null}
                     <div className={styles.buttons}>
                         <button onClick={() => props.submitQuestion(`${props.attribute}`)}>Yes</button>
                         <button onClick={() => props.clearQuestion()}>No</button>

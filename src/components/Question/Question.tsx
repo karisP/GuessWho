@@ -11,27 +11,27 @@ interface IProps{
 }
 
 const Question = (props: IProps) => {
-    const [selectedCategory, setSelectedCategory] = React.useState<{id: number, title: string} | undefined>();
+    const [selectedCategory, setSelectedCategory] = React.useState<{id: number, title: string, questionId: number} | undefined>();
     const [selectedAttribute, setSelectedAttribute] = React.useState<string | null>(null);
     const [hidden, setHidden] = React.useState<boolean>(true);
     const [submittedQuestion, setSubmittedQuestion] = React.useState<string | null>(null);
     const [response, setResponse] = React.useState<boolean>(false);
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
 
-    const categories = [{ id: 0, title: "Hair Color", buttons: [{ text: "Blonde" }, { text: "Brown" }, { text: "Black" }, { text: "Red" }, { text: "Gray" }]},
-    { id: 1, title: "Accessories", buttons: [{ text: "Glasses" }, { text: "Hat" }, { text: "Necklace" }] },
-     { id: 2, title: "Age", buttons: [{ text: "Child" }, { text: "Adult" }, { text: "Elderly" } ]}, 
-     { id: 3, title: "Gender", buttons: [{ text: "Male" }, { text: "Female" }, { text: "Uncertain" }]},
-     { id: 4, title: "Species", buttons: [{ text: "Human" }, { text: "Animal" }, { text: "Uncertain" }]},
-     { id: 5, title: "Role", buttons: [{ text: "Staff" }, { text: "Student" }, {text:"Servant"}]},
-     { id: 6, title: "Facial Hair", buttons: [{ text: "Yes" }, { text: "No" }]},
-     { id: 7, title: "House", buttons: [{ text: "Griffindor" }, { text: "Slytherin" }, { text: "Ravenclaw" }, {text: "Hufflepuff"}]},
-     { id: 8, title: "Hair Length", buttons: [{ text: "Long" }, { text: "Medium" }, { text: "Short" }, {text: "Bald"}]},
-     { id: 9, title: "Hair Texture", buttons: [{ text: "Straight" }, { text: "Curly" }, { text: "Feathers" }]},
-     { id: 10, title: "Defining Feature", buttons: [{ text: "Eye" }, { text: "Nose" }, { text: "Beak" }]}
+    const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", buttons: [{ text: "Blonde" }, { text: "Brown" }, { text: "Black" }, { text: "Red" }, { text: "Gray" }]},
+    { id: 1, questionId: 1 , title: "Accessories", buttons: [{ text: "Glasses" }, { text: "Hat" }, { text: "Necklace" }] },
+     { id: 2, questionId: 2, title: "Age", buttons: [{ text: "Child" }, { text: "Adult" }, { text: "Elderly" } ]}, 
+     { id: 3, questionId: 3, title: "Gender", buttons: [{ text: "Male" }, { text: "Female" }, { text: "Uncertain" }]},
+     { id: 4, questionId: 4, title: "Species", buttons: [{ text: "Human" }, { text: "Animal" }, { text: "Uncertain" }]},
+     { id: 5, questionId: 5, title: "Role", buttons: [{ text: "Staff" }, { text: "Student" }, {text:"Servant"}]},
+     { id: 6, questionId: 6, title: "Facial Hair", buttons: [{ text: "Yes" }, { text: "No" }]},
+     { id: 7, questionId: 5, title: "House", buttons: [{ text: "Griffindor" }, { text: "Slytherin" }, { text: "Ravenclaw" }, {text: "Hufflepuff"}]},
+     { id: 8, questionId: 1, title: "Hair Length", buttons: [{ text: "Long" }, { text: "Medium" }, { text: "Short" }, {text: "Bald"}]},
+     { id: 9, questionId: 1, title: "Hair Texture", buttons: [{ text: "Straight" }, { text: "Curly" }, { text: "Feathers" }]},
+     { id: 10, questionId: 6, title: "Defining Feature", buttons: [{ text: "Eye" }, { text: "Nose" }, { text: "Beak" }]}
    ]
-    const isSelected = (category : {id: number, title: string}) => {
-        setSelectedCategory({ id: category.id, title: category.title });
+    const isSelected = (category : {id: number, title: string, questionId: number}) => {
+        setSelectedCategory({ id: category.id, title: category.title, questionId: category.questionId });
     }
 
     const toggleCategory = () => {
