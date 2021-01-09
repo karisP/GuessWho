@@ -21,7 +21,7 @@ const Chat = (props: IProps) => {
         `Do you want to know if my character is of the ${props.attribute} ${props.category ? props.category.title : ''}?`,
         `Do you want to know if my character is a ${props.attribute}?`,
         `Do you want to know if my character has ${props.category ? props.category.title : ''}?`,
-        `Do you want to know if my character's ${props.attribute} is a ${props.category ? props.category.title : ''}?`,
+        `Do you want to know if my character's ${props.category ? props.category.title : ''} is a ${props.attribute}?`,
 
     ]
 
