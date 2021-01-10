@@ -11,7 +11,7 @@ const pool = new Pool({
 
 const getCharacters = () => {
     return new Promise(function(resolve, reject) {
-      pool.query('SELECT * FROM harry_potter ORDER BY id ASC', (error, results) => {
+      pool.query('SELECT * FROM harrypotter ORDER BY id ASC', (error, results) => {
           console.log(error, results);
         if (error) {
           reject(error)

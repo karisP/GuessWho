@@ -39,15 +39,14 @@ interface Character
 export interface ICharacter{
   id: number;
   name: string;
-  age: string;
-  accessory: string;
-  facial_attr: string;
-  facial_hair: string;
+  hairType: string;
+  hairColor: string;
+  hairLength: string;
+  facialHair: boolean;
+  definingFeature: string;
   gender: string;
-  hair_color: string;
-  hair_length: string;
-  hair_type: string;
-  more: string;
+  accessory: string;
+  age: string;
   species: string;
   role: string;
   house: string;

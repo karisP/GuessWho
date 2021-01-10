@@ -19,16 +19,16 @@ const Question = (props: IProps) => {
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
 
     const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", buttons: [{ text: "Blonde" }, { text: "Brown" }, { text: "Black" }, { text: "Red" }, { text: "Gray" }]},
-    { id: 1, questionId: 1 , title: "Accessories", buttons: [{ text: "Glasses" }, { text: "Hat" }, { text: "Necklace" }] },
-     { id: 2, questionId: 2, title: "Age", buttons: [{ text: "Child" }, { text: "Adult" }, { text: "Elderly" } ]}, 
-     { id: 3, questionId: 3, title: "Gender", buttons: [{ text: "Male" }, { text: "Female" }, { text: "Uncertain" }]},
-     { id: 4, questionId: 4, title: "Species", buttons: [{ text: "Human" }, { text: "Animal" }, { text: "Uncertain" }]},
+    { id: 1, questionId: 1 , title: "Accessories", buttons: [{ text: "Glasses" }, { text: "Hat" }] },
+     { id: 2, questionId: 2, title: "Age", buttons: [{ text: "Child" }, { text: "Adult" }, { text: "Advanced" } ]}, 
+     { id: 3, questionId: 3, title: "Gender", buttons: [{ text: "Male" }, { text: "Female" }, { text: "Other" }]},
+     { id: 4, questionId: 4, title: "Species", buttons: [{ text: "Wizard" }, { text: "Animal" }, { text: "Muggle" }, {text: "Squib"}]},
      { id: 5, questionId: 6, title: "Role", buttons: [{ text: "Staff" }, { text: "Student" }, {text:"Servant"}]},
      { id: 6, questionId: 5, title: "Facial Hair", buttons: [{ text: "Yes" }, { text: "No" }]},
      { id: 7, questionId: 4, title: "House", buttons: [{ text: "Griffindor" }, { text: "Slytherin" }, { text: "Ravenclaw" }, {text: "Hufflepuff"}]},
      { id: 8, questionId: 0, title: "Hair Length", buttons: [{ text: "Long" }, { text: "Medium" }, { text: "Short" }, {text: "Bald"}]},
      { id: 9, questionId: 0, title: "Hair Texture", buttons: [{ text: "Straight" }, { text: "Curly" }, { text: "Feathers" }]},
-     { id: 10, questionId: 6, title: "Defining Feature", buttons: [{ text: "Eye" }, { text: "Nose" }, { text: "Beak" }]}
+     { id: 10, questionId: 6, title: "Defining Feature", buttons: [{ text: "Eye" }, { text: "Nose" }, { text: "Beak" }, {text: "Ears"}]}
    ]
     const isSelected = (category : {id: number, title: string, questionId: number}) => {
         setSelectedCategory({ id: category.id, title: category.title, questionId: category.questionId });
@@ -48,7 +48,7 @@ const Question = (props: IProps) => {
         console.log(submittedQuestion);
         if(props.character && selectedAttribute && selectedCategory){
             if(selectedCategory.id === 0){
-                setResponse(selectedAttribute.toLowerCase() === props.character.hair_color);
+                setResponse(selectedAttribute.toLowerCase() === props.character.hairColor);
             }else if(selectedCategory.id === 1){
                 setResponse(selectedAttribute.toLowerCase() === props.character.accessory)
             } else if(selectedCategory.id === 2){
@@ -57,18 +57,18 @@ const Question = (props: IProps) => {
                 setResponse(selectedAttribute.toLowerCase() === props.character.gender);
             } else if(selectedCategory.id === 4){
                 setResponse(selectedAttribute.toLowerCase() === props.character.species);
-            // } else if(selectedCategory.id === 5){
-            //     setResponse(selectedAttribute.toLowerCase() === props.character.role);
+            } else if(selectedCategory.id === 5){
+                setResponse(selectedAttribute.toLowerCase() === props.character.role);
             } else if(selectedCategory.id === 6){
-                setResponse(selectedAttribute.toLowerCase() === props.character.facial_hair);
+                setResponse(props.character.facialHair);
             } else if(selectedCategory.id === 7){
                 setResponse(selectedAttribute.toLowerCase() === props.character.house);
             } else if(selectedCategory.id === 8){
-                setResponse(selectedAttribute.toLowerCase() === props.character.hair_length);
+                setResponse(selectedAttribute.toLowerCase() === props.character.hairLength);
             } else if(selectedCategory.id === 9){
-                setResponse(selectedAttribute.toLowerCase() === props.character.hair_type);
+                setResponse(selectedAttribute.toLowerCase() === props.character.hairType);
             } else if(selectedCategory.id === 10){
-                setResponse(selectedAttribute.toLowerCase() === props.character.facial_attr);
+                setResponse(selectedAttribute.toLowerCase() === props.character.definingFeature);
             }
         }
     }
