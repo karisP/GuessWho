@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Question.module.css';
-import Category from '../Category/Category';
+// import Category from '../Category/Category';
 import Chat from '../Chat/Chat';
 import { ICharacter } from '../../App';
 
@@ -10,39 +10,68 @@ interface IProps{
     win: boolean | null;
 }
 
+interface ICategory{
+    id: number,
+    questionId: number,
+    title: string,
+    attributes: string[],
+}
+
 const Question = (props: IProps) => {
-    const [selectedCategory, setSelectedCategory] = React.useState<{id: number, title: string, questionId: number} | undefined>();
+    const [selectedCategory, setSelectedCategory] = React.useState<ICategory | undefined>();
     const [selectedAttribute, setSelectedAttribute] = React.useState<string | null>(null);
-    const [hidden, setHidden] = React.useState<boolean>(true);
+    // const [hidden, setHidden] = React.useState<boolean>(true);
     const [submittedQuestion, setSubmittedQuestion] = React.useState<string | null>(null);
-    const [response, setResponse] = React.useState<boolean>(false);
+    const [response, setResponse] = React.useState<boolean | undefined>();
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
 
-    const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", buttons: [{ text: "Blonde" }, { text: "Brown" }, { text: "Black" }, { text: "Red" }, { text: "Gray" }]},
-    { id: 1, questionId: 1 , title: "Accessories", buttons: [{ text: "Glasses" }, { text: "Hat" }] },
-     { id: 2, questionId: 2, title: "Age", buttons: [{ text: "Child" }, { text: "Adult" }, { text: "Advanced" } ]}, 
-     { id: 3, questionId: 3, title: "Gender", buttons: [{ text: "Male" }, { text: "Female" }, { text: "Other" }]},
-     { id: 4, questionId: 4, title: "Species", buttons: [{ text: "Wizard" }, { text: "Animal" }, { text: "Muggle" }, {text: "Squib"}]},
-     { id: 5, questionId: 6, title: "Role", buttons: [{ text: "Staff" }, { text: "Student" }, {text:"Servant"}]},
-     { id: 6, questionId: 5, title: "Facial Hair", buttons: [{ text: "Yes" }, { text: "No" }]},
-     { id: 7, questionId: 4, title: "House", buttons: [{ text: "Griffindor" }, { text: "Slytherin" }, { text: "Ravenclaw" }, {text: "Hufflepuff"}]},
-     { id: 8, questionId: 0, title: "Hair Length", buttons: [{ text: "Long" }, { text: "Medium" }, { text: "Short" }, {text: "Bald"}]},
-     { id: 9, questionId: 0, title: "Hair Texture", buttons: [{ text: "Straight" }, { text: "Curly" }, { text: "Feathers" }]},
-     { id: 10, questionId: 6, title: "Defining Feature", buttons: [{ text: "Eye" }, { text: "Nose" }, { text: "Beak" }, {text: "Ears"}]}
-   ]
-    const isSelected = (category : {id: number, title: string, questionId: number}) => {
-        setSelectedCategory({ id: category.id, title: category.title, questionId: category.questionId });
+//     const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", buttons: [{ text: "Blonde" }, { text: "Brown" }, { text: "Black" }, { text: "Red" }, { text: "Gray" }]},
+//     { id: 1, questionId: 1 , title: "Accessories", buttons: [{ text: "Glasses" }, { text: "Hat" }] },
+//      { id: 2, questionId: 2, title: "Age", buttons: [{ text: "Child" }, { text: "Adult" }, { text: "Advanced" } ]}, 
+//      { id: 3, questionId: 3, title: "Gender", buttons: [{ text: "Male" }, { text: "Female" }, { text: "Other" }]},
+//      { id: 4, questionId: 4, title: "Species", buttons: [{ text: "Wizard" }, { text: "Animal" }, { text: "Muggle" }, {text: "Squib"}]},
+//      { id: 5, questionId: 6, title: "Role", buttons: [{ text: "Staff" }, { text: "Student" }, {text:"Servant"}]},
+//      { id: 6, questionId: 5, title: "Facial Hair", buttons: [{ text: "Yes" }, { text: "No" }]},
+//      { id: 7, questionId: 4, title: "House", buttons: [{ text: "Griffindor" }, { text: "Slytherin" }, { text: "Ravenclaw" }, {text: "Hufflepuff"}]},
+//      { id: 8, questionId: 0, title: "Hair Length", buttons: [{ text: "Long" }, { text: "Medium" }, { text: "Short" }, {text: "Bald"}]},
+//      { id: 9, questionId: 0, title: "Hair Texture", buttons: [{ text: "Straight" }, { text: "Curly" }, { text: "Feathers" }]},
+//      { id: 10, questionId: 6, title: "Defining Feature", buttons: [{ text: "Eye" }, { text: "Nose" }, { text: "Beak" }, {text: "Ears"}]}
+//    ]
+
+   const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", attributes: ["Blonde", "Brown", "Black", "Red", "Gray"]},
+   { id: 1, questionId: 1 , title: "Accessories", attributes: ["Glasses", "Hat"] },
+    { id: 2, questionId: 2, title: "Age", attributes: ["Child", "Adult" , "Advanced"]}, 
+    { id: 3, questionId: 3, title: "Gender", attributes: ["Male", "Female", "Other"]},
+    { id: 4, questionId: 4, title: "Species", attributes: ["Wizard", "Animal", "Muggle", "Squib"]},
+    { id: 5, questionId: 6, title: "Role", attributes: ["Staff", "Student", "Servant"]},
+    { id: 6, questionId: 5, title: "Facial Hair", attributes: ["Yes", "No"]},
+    { id: 7, questionId: 4, title: "House", attributes: ["Griffindor", "Slytherin", "Ravenclaw", "Hufflepuff"]},
+    { id: 8, questionId: 0, title: "Hair Length", attributes: ["Long", "Medium", "Short", "Bald"]},
+    { id: 9, questionId: 0, title: "Hair Texture", attributes: ["Straight", "Curly", "Feathers"]},
+    { id: 10, questionId: 6, title: "Defining Feature", attributes: ["Eye", "Nose", "Beak", "Ears"]}
+  ]
+    // const isSelected = (category : ICategory) => {
+    //     setSelectedCategory({ id: category.id, title: category.title, questionId: category.questionId, attributes: category.attributes});
+    // }
+
+    // const toggleCategory = () => {
+    //     setHidden(!hidden);
+    // }
+
+    // const handleAttribute = (text: string) => {
+    //     setSelectedAttribute(text);
+    //     console.log(selectedAttribute);
+    // }
+    const onChangeCategory = (e: React.FormEvent<HTMLSelectElement>) => {
+        if(selectedAttribute) setSelectedAttribute(null);
+        if(submittedQuestion) setSubmittedQuestion(null);
+        setSelectedCategory(categories[parseInt(e.currentTarget.value)]);
+    }
+    const onChangeAttribute = (e: React.FormEvent<HTMLSelectElement>) => {
+        if(submittedQuestion) setSubmittedQuestion(null);
+        setSelectedAttribute(e.currentTarget.value);
     }
 
-    const toggleCategory = () => {
-        setHidden(!hidden);
-    }
-
-    const handleAttribute = (text: string) => {
-        setSelectedAttribute(text);
-        console.log(selectedAttribute);
-    }
-    //console.log(selectedCategory, selectedAttribute, submittedQuestion, props.character);
     const submitQuestion = (attribute: string) => {
         setSubmittedQuestion(attribute);
         console.log(submittedQuestion);
@@ -76,7 +105,7 @@ const Question = (props: IProps) => {
     const clearQuestion = () => {
         setSelectedAttribute(null);
         setSelectedCategory(undefined);
-        setHidden(true);
+        //setHidden(true);
         setSubmittedQuestion(null);
     }
     const onChangeFinal = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,18 +113,28 @@ const Question = (props: IProps) => {
     }
 
     const onSubmitFinal = () => {
-        console.log(finalAnswer, props.character ? props.character.name : null);
         if(props.character && (finalAnswer.toLowerCase() === props.character.name.toLowerCase())){
             props.onWin(true);
         }else{
             props.onWin(false);
         }
     }
-
         return (
             <div className={classes.Question}>
                 <p>Ask Me a Question</p>
-                {categories.map((category, id) => {
+                <select onChange={(e) => onChangeCategory(e)}>
+                    <option value={''}>Categories</option>
+                    {categories.map(category => {
+                        return(<option value={category.id}>{category.title}</option>)
+                    })}
+                </select>
+                <select onChange={(e) => onChangeAttribute(e)}>
+                    <option value={''}>Attributes</option>
+                    {selectedCategory ? categories[selectedCategory.id].attributes.map(attribute => {
+                        return(<option value={attribute}>{attribute}</option>)
+                    }) : <option>Select category first</option>}
+                </select>
+                {/* {categories.map((category, id) => {
                     return (
                     <Category
                         key={id}
@@ -109,7 +148,7 @@ const Question = (props: IProps) => {
                         />
                     )
                 })
-                }
+                } */}
 
                 <Chat
                     attribute={selectedAttribute}

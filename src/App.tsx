@@ -69,7 +69,7 @@ const App = () => {
 
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
-      let randomInt = Math.floor(Math.random() * 10); 
+      let randomInt = Math.floor(Math.random() * 24); 
       setDbCharacter(data[randomInt]);
     })
   }, []);

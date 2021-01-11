@@ -6,7 +6,7 @@ interface IProps {
     category: { id: number, title: string, questionId: number } | undefined;
     submitQuestion: (attribute: string) => void;
     clearQuestion: () => void;
-    answer: boolean;
+    answer: boolean | undefined;
     submittedQuestion: string | null;
     onSubmitFinal: () => void;
     onChangeFinal: (e: React.ChangeEvent<HTMLInputElement>) => void;
