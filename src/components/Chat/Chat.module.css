@@ -4,9 +4,19 @@
 }
 
 .chatbox{
-    font-size: 18px;
+    font-size: 14px;
+    background-color: #fffd82;
+    border-radius: 10px;
+    margin: 15px;
+    padding: 5px;
+    max-width: 60%;
 }
 
 .buttons{
     display: block;
+    margin-top: 5px;
+}
+
+button:first-child{
+    margin-right: 5px;
 }

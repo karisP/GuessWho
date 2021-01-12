@@ -66,6 +66,7 @@ function api<T>(url: string): Promise<T> {
 const App = () => {
   const [dbCharacter, setDbCharacter] = React.useState<ICharacter | null>(null);
   const [win, setWin] = React.useState<boolean | null>(null);
+  let submittedQuestionCount = 0;
 
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
@@ -108,9 +109,13 @@ const App = () => {
       setWin(null);
     }
 
+    const onCountQuestions = () =>{
+      return submittedQuestionCount++;
+    }
+
     return (
       <div className="App">
-        {win ? <Modal onStartNewGame={onStartNewGame} dbCharacter={dbCharacter}/> : null}
+        {win ? <Modal onStartNewGame={onStartNewGame} submittedQuestionCount={submittedQuestionCount} dbCharacter={dbCharacter}/> : null}
         <header className="App-header">
           <h1>Guess Hoot</h1>
           <div className="outer">
@@ -122,7 +127,7 @@ const App = () => {
               })}
             </div>
             <div className="sidebar">
-              <Question character={dbCharacter} onWin={onWin} win={win}/>
+              <Question character={dbCharacter} onWin={onWin} win={win} onCountQuestions={onCountQuestions}/>
             </div>
           </div>
 

@@ -8,6 +8,7 @@ interface IProps{
     character: ICharacter | null;
     onWin: (win: boolean) => void;
     win: boolean | null;
+    onCountQuestions: () => void;
 }
 
 interface ICategory{
@@ -69,11 +70,12 @@ const Question = (props: IProps) => {
     }
     const onChangeAttribute = (e: React.FormEvent<HTMLSelectElement>) => {
         if(submittedQuestion) setSubmittedQuestion(null);
-        setSelectedAttribute(e.currentTarget.value);
+        setSelectedAttribute(e.currentTarget.value.toLowerCase());
     }
 
     const submitQuestion = (attribute: string) => {
         setSubmittedQuestion(attribute);
+        props.onCountQuestions();
         console.log(submittedQuestion);
         if(props.character && selectedAttribute && selectedCategory){
             if(selectedCategory.id === 0){
@@ -121,19 +123,39 @@ const Question = (props: IProps) => {
     }
         return (
             <div className={classes.Question}>
-                <p>Ask Me a Question</p>
-                <select onChange={(e) => onChangeCategory(e)}>
-                    <option value={''}>Categories</option>
-                    {categories.map(category => {
-                        return(<option value={category.id}>{category.title}</option>)
-                    })}
-                </select>
-                <select onChange={(e) => onChangeAttribute(e)}>
-                    <option value={''}>Attributes</option>
-                    {selectedCategory ? categories[selectedCategory.id].attributes.map(attribute => {
-                        return(<option value={attribute}>{attribute}</option>)
-                    }) : <option>Select category first</option>}
-                </select>
+                <div className={classes.header}>Question Bot</div>                       
+                <Chat
+                    attribute={selectedAttribute}
+                    category={selectedCategory} 
+                    submitQuestion={submitQuestion}
+                    clearQuestion={clearQuestion}
+                    answer={response}
+                    submittedQuestion={submittedQuestion}
+                    onSubmitFinal={onSubmitFinal}
+                    onChangeFinal={onChangeFinal}
+                    finalAnswer={finalAnswer}
+                    win={props.win}
+                    />
+                <div className={classes.questions}>
+                    <div>
+                        <select onChange={(e) => onChangeCategory(e)}>
+                            <option value={''}>Categories</option>
+                            {categories.map(category => {
+                                return(<option value={category.id}>{category.title}</option>)
+                            })}
+                        </select>
+                        <select onChange={(e) => onChangeAttribute(e)}>
+                            <option value={''}>Attributes</option>
+                            {selectedCategory ? categories[selectedCategory.id].attributes.map(attribute => {
+                                return(<option value={attribute}>{attribute}</option>)
+                            }) : <option>Select category first</option>}
+                        </select>
+                    </div>
+                    <div>
+                        <input placeholder="Enter your final guess" value={finalAnswer} onChange={(e) => onChangeFinal(e)}></input>
+                        <button type="button" onClick={onSubmitFinal}>Submit</button>
+                    </div>
+                </div>
                 {/* {categories.map((category, id) => {
                     return (
                     <Category
@@ -149,19 +171,6 @@ const Question = (props: IProps) => {
                     )
                 })
                 } */}
-
-                <Chat
-                    attribute={selectedAttribute}
-                    category={selectedCategory} 
-                    submitQuestion={submitQuestion}
-                    clearQuestion={clearQuestion}
-                    answer={response}
-                    submittedQuestion={submittedQuestion}
-                    onSubmitFinal={onSubmitFinal}
-                    onChangeFinal={onChangeFinal}
-                    finalAnswer={finalAnswer}
-                    win={props.win}
-                    />
             </div>
         )
 

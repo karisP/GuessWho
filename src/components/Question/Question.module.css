@@ -1,7 +1,38 @@
 .Question{
-    border: 1px solid white;
     margin: 20px;
     border-radius: 10px;
     color: black;
     background-color: white;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ebc934;
+    height: 40px;
+    border-radius: 10px 10px 0px 0px;
+    width: 100%;
+    font-size: 20px;
+}
+
+.questions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90px;
+    background-color: #ededed;
+}
+
+.questions div:first-child{
+    display: flex;
+}
+
+select:first-child{
+    margin-right: 10px;
+}
+
+input{
+    margin-right: 5px;;
 }
