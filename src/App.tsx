@@ -66,7 +66,7 @@ function api<T>(url: string): Promise<T> {
 const App = () => {
   const [dbCharacter, setDbCharacter] = React.useState<ICharacter | null>(null);
   const [win, setWin] = React.useState<boolean | null>(null);
-  let submittedQuestionCount = 0;
+  const [questionCount, setQuestionCount] = React.useState<number>(0);
 
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
@@ -110,12 +110,14 @@ const App = () => {
     }
 
     const onCountQuestions = () =>{
-      return submittedQuestionCount++;
+      setQuestionCount(questionCount + 1);
     }
+    
+    const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
 
     return (
       <div className="App">
-        {win ? <Modal onStartNewGame={onStartNewGame} submittedQuestionCount={submittedQuestionCount} dbCharacter={dbCharacter}/> : null}
+        {win ? <Modal onStartNewGame={onStartNewGame} submittedQuestionCount={questionCount} winCharacter={winCharacter} dbCharacter={dbCharacter}/> : null}
         <header className="App-header">
           <h1>Guess Hoot</h1>
           <div className="outer">

@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from './Question.module.css';
-// import Category from '../Category/Category';
 import Chat from '../Chat/Chat';
 import { ICharacter } from '../../App';
 
@@ -21,7 +20,6 @@ interface ICategory{
 const Question = (props: IProps) => {
     const [selectedCategory, setSelectedCategory] = React.useState<ICategory | undefined>();
     const [selectedAttribute, setSelectedAttribute] = React.useState<string | null>(null);
-    // const [hidden, setHidden] = React.useState<boolean>(true);
     const [submittedQuestion, setSubmittedQuestion] = React.useState<string | null>(null);
     const [response, setResponse] = React.useState<boolean | undefined>();
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
@@ -51,18 +49,7 @@ const Question = (props: IProps) => {
     { id: 9, questionId: 0, title: "Hair Texture", attributes: ["Straight", "Curly", "Feathers"]},
     { id: 10, questionId: 6, title: "Defining Feature", attributes: ["Eye", "Nose", "Beak", "Ears"]}
   ]
-    // const isSelected = (category : ICategory) => {
-    //     setSelectedCategory({ id: category.id, title: category.title, questionId: category.questionId, attributes: category.attributes});
-    // }
 
-    // const toggleCategory = () => {
-    //     setHidden(!hidden);
-    // }
-
-    // const handleAttribute = (text: string) => {
-    //     setSelectedAttribute(text);
-    //     console.log(selectedAttribute);
-    // }
     const onChangeCategory = (e: React.FormEvent<HTMLSelectElement>) => {
         if(selectedAttribute) setSelectedAttribute(null);
         if(submittedQuestion) setSubmittedQuestion(null);
@@ -107,7 +94,6 @@ const Question = (props: IProps) => {
     const clearQuestion = () => {
         setSelectedAttribute(null);
         setSelectedCategory(undefined);
-        //setHidden(true);
         setSubmittedQuestion(null);
     }
     const onChangeFinal = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,21 +142,6 @@ const Question = (props: IProps) => {
                         <button type="button" onClick={onSubmitFinal}>Submit</button>
                     </div>
                 </div>
-                {/* {categories.map((category, id) => {
-                    return (
-                    <Category
-                        key={id}
-                        id={id} 
-                        title={category.title} 
-                        buttons={category.buttons} 
-                        onClick={() => {isSelected(category); toggleCategory();}} 
-                        hide={hidden} 
-                        selectedId={selectedCategory ? selectedCategory.id : undefined}
-                        handleAttribute={handleAttribute}
-                        />
-                    )
-                })
-                } */}
             </div>
         )
 

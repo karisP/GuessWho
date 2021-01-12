@@ -6,6 +6,7 @@ import cardback from '../../images/harry_potter/cardback.png';
 interface IProps{
     onStartNewGame: () => void;
     dbCharacter: ICharacter | null;
+    winCharacter: {name: string, img: string} | null;
     submittedQuestionCount: number;
 }
 
@@ -14,7 +15,7 @@ const Modal = (props: IProps) => {
     return(
         <div className={styles.container} onClick={props.onStartNewGame}>
             <div className={styles.message}>
-                <img src={cardback} alt=""/>
+                {props.winCharacter ? <img src={props.winCharacter.img} alt=""/> : <img src={cardback} alt=""/>}
                 <div>
                     <p>You've guessed {props.dbCharacter ? props.dbCharacter.name : "WHO"} correctly in {props.submittedQuestionCount} guesses!</p>
                     <p>YOU'VE WON! 50 points to your house!</p>
