@@ -11,14 +11,22 @@ interface IProps{
 }
 
 const Modal = (props: IProps) => {
+    let points: number = 0;
+    if(props.submittedQuestionCount <= 5){
+        points = 100;
+    } else if(props.submittedQuestionCount > 5 && props.submittedQuestionCount < 10){
+        points = 50;
+    }else{
+        points = 25;
+    }
     
     return(
         <div className={styles.container} onClick={props.onStartNewGame}>
             <div className={styles.message}>
-                {props.winCharacter ? <img src={props.winCharacter.img} alt=""/> : <img src={cardback} alt=""/>}
+                {props.winCharacter ? <img src={props.winCharacter.img} alt="character"/> : <img src={cardback} alt=""/>}
                 <div>
                     <p>You've guessed {props.dbCharacter ? props.dbCharacter.name : "WHO"} correctly in {props.submittedQuestionCount} guesses!</p>
-                    <p>YOU'VE WON! 50 points to your house!</p>
+                    <p>YOU'VE WON {points} points to your house!</p>
                     <button type="button" onClick={props.onStartNewGame}>New Game</button>
                 </div>
             </div>
