@@ -23,6 +23,7 @@ const Modal = (props: IProps) => {
     return(
         <div className={styles.container} onClick={props.onStartNewGame}>
             <div className={styles.message}>
+            <div className={styles.close} onClick={props.onStartNewGame}/>
                 {props.winCharacter ? <img src={props.winCharacter.img} alt="character"/> : <img src={cardback} alt=""/>}
                 <div>
                     <p>You've guessed {props.dbCharacter ? props.dbCharacter.name : "WHO"} correctly in {props.submittedQuestionCount} guesses!</p>

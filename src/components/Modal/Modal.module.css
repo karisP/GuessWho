@@ -16,8 +16,10 @@
 
 .message{
     display: flex;
+    position: relative;
     background: white;
     padding: 10px;
+    max-width: 700px;
 }
 
 .message div{
@@ -27,4 +29,15 @@
 img{
     width: 150px;
     height: 200px;
+}
+
+.close{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 13px;
+    height: 13px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%0A%3Csvg width='13' height='13' viewBox='0 0 13 13' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.44675 9.52385L3.86674 3.79M3.86691 9.52388L9.44678 3.79004' stroke='black'/%3E%3C/svg%3E");
 }

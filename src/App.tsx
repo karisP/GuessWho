@@ -28,6 +28,7 @@ import trelawney from './images/harry_potter/trelawney.jpg';
 import myrtle from './images/harry_potter/myrtle.jpg';
 import moody from './images/harry_potter/moody.jpg';
 import Modal from './components/Modal/Modal';
+import StartModal from './components/Modal/StartModal';
 
 interface Character
 {
@@ -67,6 +68,7 @@ const App = () => {
   const [dbCharacter, setDbCharacter] = React.useState<ICharacter | null>(null);
   const [win, setWin] = React.useState<boolean | null>(null);
   const [questionCount, setQuestionCount] = React.useState<number>(0);
+  const [closeStartModal, setCloseStartModal] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
@@ -109,14 +111,19 @@ const App = () => {
       setWin(null);
     }
 
-    const onCountQuestions = () =>{
+    const onCountQuestions = () => {
       setQuestionCount(questionCount + 1);
+    }
+
+    const onCloseStartModal = () => {
+      setCloseStartModal(true);
     }
     
     const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
 
     return (
       <div className="App">
+        {!closeStartModal ? <StartModal onCloseStartModal={onCloseStartModal}/> : null }
         {win ? <Modal onStartNewGame={onStartNewGame} submittedQuestionCount={questionCount} winCharacter={winCharacter} dbCharacter={dbCharacter}/> : null}
         <header className="App-header">
           <h1>Guess Hoot</h1>
