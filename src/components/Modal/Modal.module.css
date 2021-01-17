@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position:absolute;
+    position:fixed;
     padding: 10px;
     left: 50%;
     top: 50%;
@@ -45,11 +45,18 @@ img{
 button{
     padding: 5px 10px;
     box-shadow: none;
-    background-color:#ebc934;
+    background-color: transparent;
+    color: #2F751C;
     border-radius: 20px;
-    border: none;
+    border: 1px solid #2F751C;
+    font-weight: 700;
 }
 
 button:hover{
-    background-color: #fffd82;
+    background-color: #2F751C;
+    color: white;
+}
+
+button:focus{
+    outline: none;
 }

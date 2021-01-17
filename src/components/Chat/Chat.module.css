@@ -4,13 +4,25 @@
 }
 
 .chatbox{
+    position: relative;
     font-size: 14px;
     background-color: #fffd82;
-    border-radius: 10px;
+    border-radius: 10px 10px 10px 5px;
     margin: 15px;
     padding: 5px;
     max-width: 60%;
+    width: fit-content;
 }
+.chatbox::after {
+    content: " ";
+    position: absolute;
+    top: 80%;
+    right: 100%; /* To the left of the tooltip */
+    margin-top: -4px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: transparent #fffd82 transparent transparent;
+  }
 
 .buttons{
     display: block;

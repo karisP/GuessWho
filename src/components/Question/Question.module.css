@@ -29,6 +29,11 @@
     display: flex;
 }
 
+select, input{
+    padding: 2px;
+    border-radius: 5px;
+}
+
 select:first-child{
     margin-right: 10px;
 }

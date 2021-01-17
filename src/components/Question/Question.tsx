@@ -109,7 +109,7 @@ const Question = (props: IProps) => {
     }
         return (
             <div className={classes.Question}>
-                <div className={classes.header}>Question Bot</div>                       
+                <div className={classes.header}>Hat Chat</div>                       
                 <Chat
                     attribute={selectedAttribute}
                     category={selectedCategory} 
