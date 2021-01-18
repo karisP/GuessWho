@@ -17,25 +17,21 @@ interface ICategory{
     attributes: string[],
 }
 
+interface IQuestion{
+    category: ICategory;
+    attribute: string;
+    question: string;
+    response: boolean;
+    finalAnswer: string | null;
+}
+
 const Question = (props: IProps) => {
     const [selectedCategory, setSelectedCategory] = React.useState<ICategory | undefined>();
     const [selectedAttribute, setSelectedAttribute] = React.useState<string | null>(null);
     const [submittedQuestion, setSubmittedQuestion] = React.useState<string | null>(null);
     const [response, setResponse] = React.useState<boolean | undefined>();
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
-
-//     const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", buttons: [{ text: "Blonde" }, { text: "Brown" }, { text: "Black" }, { text: "Red" }, { text: "Gray" }]},
-//     { id: 1, questionId: 1 , title: "Accessories", buttons: [{ text: "Glasses" }, { text: "Hat" }] },
-//      { id: 2, questionId: 2, title: "Age", buttons: [{ text: "Child" }, { text: "Adult" }, { text: "Advanced" } ]}, 
-//      { id: 3, questionId: 3, title: "Gender", buttons: [{ text: "Male" }, { text: "Female" }, { text: "Other" }]},
-//      { id: 4, questionId: 4, title: "Species", buttons: [{ text: "Wizard" }, { text: "Animal" }, { text: "Muggle" }, {text: "Squib"}]},
-//      { id: 5, questionId: 6, title: "Role", buttons: [{ text: "Staff" }, { text: "Student" }, {text:"Servant"}]},
-//      { id: 6, questionId: 5, title: "Facial Hair", buttons: [{ text: "Yes" }, { text: "No" }]},
-//      { id: 7, questionId: 4, title: "House", buttons: [{ text: "Griffindor" }, { text: "Slytherin" }, { text: "Ravenclaw" }, {text: "Hufflepuff"}]},
-//      { id: 8, questionId: 0, title: "Hair Length", buttons: [{ text: "Long" }, { text: "Medium" }, { text: "Short" }, {text: "Bald"}]},
-//      { id: 9, questionId: 0, title: "Hair Texture", buttons: [{ text: "Straight" }, { text: "Curly" }, { text: "Feathers" }]},
-//      { id: 10, questionId: 6, title: "Defining Feature", buttons: [{ text: "Eye" }, { text: "Nose" }, { text: "Beak" }, {text: "Ears"}]}
-//    ]
+    const submittedQuestions: IQuestion[] = [];
 
    const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", attributes: ["Blonde", "Brown", "Black", "Red", "Gray"]},
    { id: 1, questionId: 1 , title: "Accessories", attributes: ["Glasses", "Hat"] },
@@ -89,8 +85,12 @@ const Question = (props: IProps) => {
                 setResponse(selectedAttribute.toLowerCase() === props.character.definingFeature);
             }
         }
+    {/*Begin keeping a history of the submitted questions to map through */}
+        if(selectedAttribute && selectedCategory && submittedQuestion && response)
+        submittedQuestions.push({attribute: selectedAttribute, category: selectedCategory, question: submittedQuestion, response: response, finalAnswer: finalAnswer })
     }
-
+    
+    console.log(submittedQuestions);
     const clearQuestion = () => {
         setSelectedAttribute(null);
         setSelectedCategory(undefined);
@@ -109,7 +109,7 @@ const Question = (props: IProps) => {
     }
         return (
             <div className={classes.Question}>
-                <div className={classes.header}>Hat Chat</div>                       
+                <div className={classes.header}><span className={classes['hat-image']}></span>Hat Chat</div>                       
                 <Chat
                     attribute={selectedAttribute}
                     category={selectedCategory} 

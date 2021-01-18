@@ -7,13 +7,24 @@
 
 .header{
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: #ebc934;
-    height: 40px;
+    height: 70px;
     border-radius: 10px 10px 0px 0px;
     width: 100%;
-    font-size: 20px;
+    font-size: 14px;
+}
+
+.hat-image{
+    background-image: url('../../images/harry_potter/sortinghat.jpeg');
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .questions{
@@ -21,23 +32,32 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: 10px;
     height: 90px;
     background-color: #ededed;
+    border-radius: 0px 0px 10px 10px;
 }
 
 .questions div:first-child{
     display: flex;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+select{
+    flex: 1;    
 }
 
 select, input{
-    padding: 2px;
-    border-radius: 5px;
+    padding: 4px 6px;
+    border-radius: 10px;
 }
 
 select:first-child{
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 input{
-    margin-right: 5px;;
+    border:1px solid darkslategray;
+    margin-right: 5px;
 }

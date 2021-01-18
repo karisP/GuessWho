@@ -18,10 +18,10 @@ const StartModal = (props: IProps) => {
             <div className={styles.close} onClick={props.onCloseStartModal}/>
                 <img src={sortinghat} alt=""/>
                 <div>
-                    <p>Welcome to Guess Hoot student of...hmmm...{randomHouse}!!</p>
-                    <p>You must choose categories and attributes to ask me questions about the character I am thinking of.</p>
-                    <p>Turn over the cards of those you have eliminated. When you are ready, submit your final guess.</p>
-                    <p>Beware refreshing the page lest you start over. Let the game begin!!</p>
+                    <p>Welcome to Guess Hoot student of...hmmm...{randomHouse}!!
+                    You must choose categories and attributes to ask me questions about the character I am thinking of.
+                    Turn over the cards of those you have eliminated. When you are ready, submit your final guess.
+                    Beware refreshing the page lest you start over. Let the game begin!!</p>
                     <button type="button" onClick={props.onCloseStartModal}>Begin</button>
                 </div>
             </div>
