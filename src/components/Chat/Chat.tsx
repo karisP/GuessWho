@@ -47,6 +47,11 @@ const Chat = (props: IProps) => {
                 :
                 null
             }
+            {props.finalAnswer ?
+                <div className={styles.final}>{props.finalAnswer}</div>
+                :
+                null
+            }
             {props.win !== null ?
                 <div className={styles.chatbox}>{!props.win ? "Try Again" : null}</div>
                 :

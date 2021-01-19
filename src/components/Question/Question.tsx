@@ -1,7 +1,8 @@
 import React from 'react';
 import classes from './Question.module.css';
-import Chat from '../Chat/Chat';
 import { ICharacter } from '../../App';
+import styles from '../Chat/Chat.module.css';
+import Chatbox from '../Chat/Chatbox';
 
 interface IProps{
     character: ICharacter | null;
@@ -17,21 +18,19 @@ interface ICategory{
     attributes: string[],
 }
 
-interface IQuestion{
-    category: ICategory;
-    attribute: string;
-    question: string;
-    response: boolean;
-    finalAnswer: string | null;
+interface IMessage{
+    message: string;
+    fromUser: boolean;
 }
 
 const Question = (props: IProps) => {
     const [selectedCategory, setSelectedCategory] = React.useState<ICategory | undefined>();
     const [selectedAttribute, setSelectedAttribute] = React.useState<string | null>(null);
-    const [submittedQuestion, setSubmittedQuestion] = React.useState<string | null>(null);
     const [response, setResponse] = React.useState<boolean | undefined>();
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
-    const submittedQuestions: IQuestion[] = [];
+    const [messages, setMessages] = React.useState<IMessage[]>(
+        [{message: "Hello student, please select from the below categories and attributes to ask me questions.", fromUser: false}]
+    );
 
    const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", attributes: ["Blonde", "Brown", "Black", "Red", "Gray"]},
    { id: 1, questionId: 1 , title: "Accessories", attributes: ["Glasses", "Hat"] },
@@ -46,20 +45,39 @@ const Question = (props: IProps) => {
     { id: 10, questionId: 6, title: "Defining Feature", attributes: ["Eye", "Nose", "Beak", "Ears"]}
   ]
 
-    const onChangeCategory = (e: React.FormEvent<HTMLSelectElement>) => {
-        if(selectedAttribute) setSelectedAttribute(null);
-        if(submittedQuestion) setSubmittedQuestion(null);
-        setSelectedCategory(categories[parseInt(e.currentTarget.value)]);
-    }
-    const onChangeAttribute = (e: React.FormEvent<HTMLSelectElement>) => {
-        if(submittedQuestion) setSubmittedQuestion(null);
-        setSelectedAttribute(e.currentTarget.value.toLowerCase());
+  const questions = [
+    `Does my character have ${selectedAttribute} ${selectedCategory ? selectedCategory.title.toLocaleLowerCase() : ''}?`,
+    `Does my character wear ${selectedAttribute}?`,
+    `Is my character ${selectedAttribute}?`,
+    `Is my character of the ${selectedAttribute} ${selectedCategory ? selectedCategory.title.toLowerCase() : ''}?`,
+    `Is my character a ${selectedAttribute}?`,
+    `Does my character have ${selectedCategory ? selectedCategory.title.toLowerCase() : ''}?`,
+    `Is my character's ${selectedCategory ? selectedCategory.title.toLowerCase() : ''} a ${selectedAttribute}?`,
+]
+
+    const addMessagetoState = (message: string, fromUser: boolean, delay: boolean) => {
+        console.log("addMessagetoState", delay);
+        delay ? setTimeout(() => setMessages([...messages, {message: message, fromUser: fromUser}]), 3000):
+        setMessages([...messages, {message: message, fromUser: fromUser}]);
     }
 
-    const submitQuestion = (attribute: string) => {
-        setSubmittedQuestion(attribute);
+    const onChangeCategory = (e: React.FormEvent<HTMLSelectElement>) => {
+        if(selectedAttribute) setSelectedAttribute(null);
+        setSelectedCategory(categories[parseInt(e.currentTarget.value)]);
+    }
+
+    const onChangeAttribute = (e: React.FormEvent<HTMLSelectElement>) => {
+        setSelectedAttribute(e.currentTarget.value.toLowerCase());
+        if(selectedCategory){
+            console.log("selectedCategory and change attribute");
+            addMessagetoState(questions[selectedCategory.questionId], true, false);
+        }
+        submitQuestion();
+    }
+    console.log(messages);
+
+    const submitQuestion = () => {
         props.onCountQuestions();
-        console.log(submittedQuestion);
         if(props.character && selectedAttribute && selectedCategory){
             if(selectedCategory.id === 0){
                 setResponse(selectedAttribute.toLowerCase() === props.character.hairColor);
@@ -85,43 +103,34 @@ const Question = (props: IProps) => {
                 setResponse(selectedAttribute.toLowerCase() === props.character.definingFeature);
             }
         }
-    {/*Begin keeping a history of the submitted questions to map through */}
-        if(selectedAttribute && selectedCategory && submittedQuestion && response)
-        submittedQuestions.push({attribute: selectedAttribute, category: selectedCategory, question: submittedQuestion, response: response, finalAnswer: finalAnswer })
+        response === true ? addMessagetoState("Yes", false, true) : addMessagetoState("No", false, true);
     }
-    
-    console.log(submittedQuestions);
-    const clearQuestion = () => {
-        setSelectedAttribute(null);
-        setSelectedCategory(undefined);
-        setSubmittedQuestion(null);
-    }
+
     const onChangeFinal = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFinalAnswer(e.currentTarget.value);
     }
 
     const onSubmitFinal = () => {
+        addMessagetoState(finalAnswer, true, false);
         if(props.character && (finalAnswer.toLowerCase() === props.character.name.toLowerCase())){
             props.onWin(true);
         }else{
             props.onWin(false);
+            addMessagetoState("Try again", false, true);
         }
     }
+
         return (
             <div className={classes.Question}>
-                <div className={classes.header}><span className={classes['hat-image']}></span>Hat Chat</div>                       
-                <Chat
-                    attribute={selectedAttribute}
-                    category={selectedCategory} 
-                    submitQuestion={submitQuestion}
-                    clearQuestion={clearQuestion}
-                    answer={response}
-                    submittedQuestion={submittedQuestion}
-                    onSubmitFinal={onSubmitFinal}
-                    onChangeFinal={onChangeFinal}
-                    finalAnswer={finalAnswer}
-                    win={props.win}
-                    />
+                <div className={classes.header}><span className={classes['hat-image']}></span>Hat Chat</div>
+                <div className={styles.Chat}>
+                    {messages.map(m => (
+                       <Chatbox
+                       message={m.message}
+                       fromUser={m.fromUser}
+                   /> 
+                    ))}                    
+                </div>                       
                 <div className={classes.questions}>
                     <div>
                         <select onChange={(e) => onChangeCategory(e)}>

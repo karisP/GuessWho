@@ -1,4 +1,6 @@
 .Chat{
+    display: flex;
+    flex-direction: column;
     width: 313px;
     height: 240px;
     overflow-y: scroll;
@@ -17,12 +19,34 @@
 .chatbox::after {
     content: " ";
     position: absolute;
-    top: 80%;
-    right: 100%; /* To the left of the tooltip */
-    margin-top: -4px;
-    border-width: 4px;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 5px;
+    border-width: 7px;
     border-style: solid;
-    border-color: transparent #fffd82 transparent transparent;
+    border-color: #fffd82 transparent transparent transparent;
+  }
+
+.user-chatbox{
+    position: relative;
+    align-self: flex-end;
+    font-size: 14px;
+    background-color: #1A3956;
+    color: white;
+    border-radius: 10px 10px 5px 10px;
+    margin: 15px;
+    padding: 5px;
+    max-width: 60%;
+    width: fit-content;
+}
+
+.user-chatbox::before {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    right: 5px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: #1A3956 transparent transparent transparent;
   }
 
 .buttons{
