@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Question.module.css';
 import { ICharacter } from '../../App';
 import styles from '../Chat/Chat.module.css';
@@ -30,7 +30,19 @@ const Question = (props: IProps) => {
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
     const [messages, setMessages] = React.useState<IMessage[]>(
         [{message: "Hello student, please select from the below categories and attributes to ask me questions.", fromUser: false}]
-    );
+        );
+    let latestMessagesRef = useRef(messages);
+    useEffect(() => {
+        latestMessagesRef.current = messages;
+      });
+    useEffect(() => {
+        function tick() {
+            // Read latest props at any time
+            console.log(latestMessagesRef.current);
+          }
+      
+          setInterval(tick, 5000);
+    })
 
    const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", attributes: ["Blonde", "Brown", "Black", "Red", "Gray"]},
    { id: 1, questionId: 1 , title: "Accessories", attributes: ["Glasses", "Hat"] },
@@ -55,11 +67,24 @@ const Question = (props: IProps) => {
     `Is my character's ${selectedCategory ? selectedCategory.title.toLowerCase() : ''} a ${selectedAttribute}?`,
 ]
 
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //         setMessages([...messages, {message: "No", fromUser: false}])
+    //      }, 3000);
+     
+    //     return () => clearTimeout(timeout);
+    //    },[]);
+
     const addMessagetoState = (message: string, fromUser: boolean, delay: boolean) => {
         console.log("addMessagetoState", delay);
-        delay ? setTimeout(() => setMessages([...messages, {message: message, fromUser: fromUser}]), 3000):
-        setMessages([...messages, {message: message, fromUser: fromUser}]);
+            setMessages([...messages, {message: message, fromUser: fromUser}]);
     }
+
+    // const delayedMessagetoState = (message: string, fromUser: boolean, delay: boolean) => {
+    //     console.log("delayedMessage", [...messages], delay);
+    //     const timeout = setTimeout(() => setMessages([...messages, {message: message, fromUser: fromUser}]), 3000);
+    //     return () => clearTimeout(timeout);
+    // }
 
     const onChangeCategory = (e: React.FormEvent<HTMLSelectElement>) => {
         if(selectedAttribute) setSelectedAttribute(null);
@@ -103,7 +128,7 @@ const Question = (props: IProps) => {
                 setResponse(selectedAttribute.toLowerCase() === props.character.definingFeature);
             }
         }
-        response === true ? addMessagetoState("Yes", false, true) : addMessagetoState("No", false, true);
+        response === true ? setTimeout(() => addMessagetoState("Yes", false, true), 3000) : setTimeout(() => addMessagetoState("No", false, true),3000);
     }
 
     const onChangeFinal = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,7 +149,7 @@ const Question = (props: IProps) => {
             <div className={classes.Question}>
                 <div className={classes.header}><span className={classes['hat-image']}></span>Hat Chat</div>
                 <div className={styles.Chat}>
-                    {messages.map(m => (
+                    {messages.map((m,key) => (
                        <Chatbox
                        message={m.message}
                        fromUser={m.fromUser}
@@ -136,13 +161,13 @@ const Question = (props: IProps) => {
                         <select onChange={(e) => onChangeCategory(e)}>
                             <option value={''}>Categories</option>
                             {categories.map(category => {
-                                return(<option value={category.id}>{category.title}</option>)
+                                return(<option key={category.id} value={category.id}>{category.title}</option>)
                             })}
                         </select>
                         <select onChange={(e) => onChangeAttribute(e)}>
                             <option value={''}>Attributes</option>
                             {selectedCategory ? categories[selectedCategory.id].attributes.map(attribute => {
-                                return(<option value={attribute}>{attribute}</option>)
+                                return(<option key={attribute} value={attribute}>{attribute}</option>)
                             }) : <option>Select category first</option>}
                         </select>
                     </div>
