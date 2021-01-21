@@ -123,6 +123,7 @@ const App = () => {
 
     return (
       <div className="App">
+        <audio src={require('./media/themesong.mp3')} autoPlay/>
         {!closeStartModal ? <StartModal onCloseStartModal={onCloseStartModal}/> : null }
         {win ? <Modal onStartNewGame={onStartNewGame} submittedQuestionCount={questionCount} winCharacter={winCharacter} dbCharacter={dbCharacter}/> : null}
         <header className="App-header">
