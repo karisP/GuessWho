@@ -150,10 +150,12 @@ const Question = (props: IProps) => {
                 <div className={classes.header}><span className={classes['hat-image']}></span>Hat Chat</div>
                 <div className={styles.Chat}>
                     {messages.map((m,key) => (
-                       <Chatbox
-                       message={m.message}
-                       fromUser={m.fromUser}
-                   /> 
+                    <div key={key}>
+                        <Chatbox
+                        message={m.message}
+                        fromUser={m.fromUser}
+                        /> 
+                   </div>
                     ))}                    
                 </div>                       
                 <div className={classes.questions}>
