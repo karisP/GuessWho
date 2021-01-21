@@ -35,14 +35,14 @@ const Question = (props: IProps) => {
     useEffect(() => {
         latestMessagesRef.current = messages;
       });
-    useEffect(() => {
-        function tick() {
-            // Read latest props at any time
-            console.log(latestMessagesRef.current);
-          }
+    // useEffect(() => {
+    //     function tick() {
+    //         // Read latest props at any time
+    //         console.log(latestMessagesRef.current);
+    //       }
       
-          setInterval(tick, 5000);
-    })
+    //       setInterval(tick, 5000);
+    // })
 
    const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", attributes: ["Blonde", "Brown", "Black", "Red", "Gray"]},
    { id: 1, questionId: 1 , title: "Accessories", attributes: ["Glasses", "Hat"] },
@@ -76,7 +76,7 @@ const Question = (props: IProps) => {
     //    },[]);
 
     const addMessagetoState = (message: string, fromUser: boolean, delay: boolean) => {
-        console.log("addMessagetoState", delay);
+        //console.log("addMessagetoState", delay);
             setMessages([...messages, {message: message, fromUser: fromUser}]);
     }
 
@@ -99,7 +99,7 @@ const Question = (props: IProps) => {
         }
         submitQuestion();
     }
-    console.log(messages);
+    //console.log(messages);
 
     const submitQuestion = () => {
         props.onCountQuestions();

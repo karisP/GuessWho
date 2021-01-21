@@ -107,8 +107,8 @@ const App = () => {
       setWin(win);
     }
 
-    const onStartNewGame = () =>{
-      setWin(null);
+    const onStartNewGame = () => {
+      window.location.reload();
     }
 
     const onCountQuestions = () => {
