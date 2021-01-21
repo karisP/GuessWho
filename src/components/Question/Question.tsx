@@ -161,13 +161,13 @@ const Question = (props: IProps) => {
                 <div className={classes.questions}>
                     <div>
                         <select onChange={(e) => onChangeCategory(e)}>
-                            <option value={''}>Categories</option>
+                            <option hidden disabled selected>Categories</option>
                             {categories.map(category => {
                                 return(<option key={category.id} value={category.id}>{category.title}</option>)
                             })}
                         </select>
                         <select onChange={(e) => onChangeAttribute(e)}>
-                            <option value={''}>Attributes</option>
+                            <option hidden>Attributes</option>
                             {selectedCategory ? categories[selectedCategory.id].attributes.map(attribute => {
                                 return(<option key={attribute} value={attribute}>{attribute}</option>)
                             }) : <option>Select category first</option>}
