@@ -161,7 +161,7 @@ const Question = (props: IProps) => {
                 <div className={classes.questions}>
                     <div>
                         <select onChange={(e) => onChangeCategory(e)}>
-                            <option hidden disabled selected>Categories</option>
+                            <option hidden>Categories</option>
                             {categories.map(category => {
                                 return(<option key={category.id} value={category.id}>{category.title}</option>)
                             })}
