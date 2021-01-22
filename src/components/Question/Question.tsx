@@ -24,6 +24,8 @@ interface IMessage{
 }
 
 const Question = (props: IProps) => {
+    
+    const chatEl = useRef<HTMLDivElement | null>(null);
     const [selectedCategory, setSelectedCategory] = React.useState<ICategory | undefined>();
     const [selectedAttribute, setSelectedAttribute] = React.useState<string | null>(null);
     const [response, setResponse] = React.useState<boolean | undefined>();
@@ -145,10 +147,20 @@ const Question = (props: IProps) => {
         }
     }
 
+    useEffect(() => {
+        if (chatEl.current) {
+          chatEl.current.addEventListener('DOMNodeInserted', event => {
+            let target = event.currentTarget as HTMLDivElement;
+            //const { currentTarget: target } = event;
+            if(target) target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+          });
+        }
+      }, [])
+
         return (
             <div className={classes.Question}>
                 <div className={classes.header}><span className={classes['hat-image']}></span>Hat Chat</div>
-                <div className={styles.Chat}>
+                <div className={styles.Chat} ref={chatEl}>
                     {messages.map((m,key) => (
                     <div key={key}>
                         <Chatbox
