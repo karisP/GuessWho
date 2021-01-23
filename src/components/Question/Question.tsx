@@ -23,6 +23,29 @@ interface IMessage{
     fromUser: boolean;
 }
 
+const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", attributes: ["Blonde", "Brown", "Black", "Red", "Gray"]},
+{ id: 1, questionId: 1 , title: "Accessories", attributes: ["Glasses", "Hat"] },
+{ id: 2, questionId: 2, title: "Age", attributes: ["Child", "Adult" , "Advanced"]}, 
+{ id: 3, questionId: 3, title: "Gender", attributes: ["Male", "Female", "Other"]},
+{ id: 4, questionId: 4, title: "Species", attributes: ["Wizard", "Animal", "Muggle", "Squib"]},
+{ id: 5, questionId: 6, title: "Role", attributes: ["Staff", "Student", "Servant"]},
+{ id: 6, questionId: 5, title: "Facial Hair", attributes: ["Yes", "No"]},
+{ id: 7, questionId: 4, title: "House", attributes: ["Griffindor", "Slytherin", "Ravenclaw", "Hufflepuff"]},
+{ id: 8, questionId: 0, title: "Hair Length", attributes: ["Long", "Medium", "Short", "Bald"]},
+{ id: 9, questionId: 0, title: "Hair Texture", attributes: ["Straight", "Curly", "Feathers"]},
+{ id: 10, questionId: 6, title: "Defining Feature", attributes: ["Eye", "Nose", "Beak", "Ears"]}
+];
+
+const questions = (category: ICategory, attribute: string) => [
+  `Does my character have ${attribute} ${category.title.toLocaleLowerCase()}?`,
+  `Does my character wear ${attribute}?`,
+  `Is my character ${attribute}?`,
+  `Is my character of the ${attribute} ${category.title.toLowerCase()}?`,
+  `Is my character a ${attribute}?`,
+  `Does my character have ${category.title.toLowerCase()}?`,
+  `Is my character's ${category.title.toLowerCase()} a ${attribute}?`,
+];
+
 const Question = (props: IProps) => {
     
     const chatEl = useRef<HTMLDivElement | null>(null);
@@ -30,56 +53,42 @@ const Question = (props: IProps) => {
     const [selectedAttribute, setSelectedAttribute] = React.useState<string | null>(null);
     const [response, setResponse] = React.useState<boolean | undefined>();
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
-    const [messages, setMessages] = React.useState<IMessage[]>(
-        [{message: "Hello student, please select from the below categories and attributes to ask me questions.", fromUser: false}]
-        );
-    let latestMessagesRef = useRef(messages);
-    useEffect(() => {
-        latestMessagesRef.current = messages;
-      });
+    const messages: IMessage[] = [{message: "Hello student, please select from the below categories and attributes to ask me questions.", fromUser: false}];
+    const [messageState, setMessageState] = React.useState<IMessage[]>();
+//attempt to provide ref memory logic
+    let oldMessagesRef = useRef<IMessage[]|null>(null);
+    let changed = false;
+
+    const newMessages = messages.slice(0);
+
+    if(messages !== oldMessagesRef.current){
+        console.log("messages !== oldMessagesRef.current", messages !== oldMessagesRef.current)
+        const oldMessages = oldMessagesRef.current;
+        oldMessagesRef.current = messages;
+        console.log("oldMessages", oldMessages);
+        if(oldMessages){
+            newMessages.push(...oldMessages);
+            changed = true;
+        } else{
+            changed = false;
+        }
+        //console.log("oldMessages", oldMessages);
+    }
+    console.log("oldMessagesRef.current", oldMessagesRef.current);
+    console.log("changed", changed);
+    console.log("newMessages", newMessages);
     // useEffect(() => {
-    //     function tick() {
-    //         // Read latest props at any time
-    //         console.log(latestMessagesRef.current);
-    //       }
-      
-    //       setInterval(tick, 5000);
-    // })
+    //     setMessageState(messages);
+    // },[changed, messages]);
+    //console.log(messageState);
+////========================================
 
-   const categories = [{ id: 0, questionId: 0 ,title: "Hair Color", attributes: ["Blonde", "Brown", "Black", "Red", "Gray"]},
-   { id: 1, questionId: 1 , title: "Accessories", attributes: ["Glasses", "Hat"] },
-    { id: 2, questionId: 2, title: "Age", attributes: ["Child", "Adult" , "Advanced"]}, 
-    { id: 3, questionId: 3, title: "Gender", attributes: ["Male", "Female", "Other"]},
-    { id: 4, questionId: 4, title: "Species", attributes: ["Wizard", "Animal", "Muggle", "Squib"]},
-    { id: 5, questionId: 6, title: "Role", attributes: ["Staff", "Student", "Servant"]},
-    { id: 6, questionId: 5, title: "Facial Hair", attributes: ["Yes", "No"]},
-    { id: 7, questionId: 4, title: "House", attributes: ["Griffindor", "Slytherin", "Ravenclaw", "Hufflepuff"]},
-    { id: 8, questionId: 0, title: "Hair Length", attributes: ["Long", "Medium", "Short", "Bald"]},
-    { id: 9, questionId: 0, title: "Hair Texture", attributes: ["Straight", "Curly", "Feathers"]},
-    { id: 10, questionId: 6, title: "Defining Feature", attributes: ["Eye", "Nose", "Beak", "Ears"]}
-  ]
 
-  const questions = [
-    `Does my character have ${selectedAttribute} ${selectedCategory ? selectedCategory.title.toLocaleLowerCase() : ''}?`,
-    `Does my character wear ${selectedAttribute}?`,
-    `Is my character ${selectedAttribute}?`,
-    `Is my character of the ${selectedAttribute} ${selectedCategory ? selectedCategory.title.toLowerCase() : ''}?`,
-    `Is my character a ${selectedAttribute}?`,
-    `Does my character have ${selectedCategory ? selectedCategory.title.toLowerCase() : ''}?`,
-    `Is my character's ${selectedCategory ? selectedCategory.title.toLowerCase() : ''} a ${selectedAttribute}?`,
-]
-
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //         setMessages([...messages, {message: "No", fromUser: false}])
-    //      }, 3000);
-     
-    //     return () => clearTimeout(timeout);
-    //    },[]);
 
     const addMessagetoState = (message: string, fromUser: boolean, delay: boolean) => {
-        //console.log("addMessagetoState", delay);
-            setMessages([...messages, {message: message, fromUser: fromUser}]);
+        messages.push({message: message, fromUser: fromUser});
+        setMessageState(messages);
+        console.log("addMessagetoState", messages);
     }
 
     // const delayedMessagetoState = (message: string, fromUser: boolean, delay: boolean) => {
@@ -97,7 +106,7 @@ const Question = (props: IProps) => {
         setSelectedAttribute(e.currentTarget.value.toLowerCase());
         if(selectedCategory){
             console.log("selectedCategory and change attribute");
-            addMessagetoState(questions[selectedCategory.questionId], true, false);
+            addMessagetoState(questions(selectedCategory,e.currentTarget.value.toLowerCase())[selectedCategory.questionId], true, false);
         }
         submitQuestion();
     }
@@ -147,28 +156,28 @@ const Question = (props: IProps) => {
         }
     }
 
+    //autoscroll chat component
     useEffect(() => {
         if (chatEl.current) {
           chatEl.current.addEventListener('DOMNodeInserted', event => {
             let target = event.currentTarget as HTMLDivElement;
-            //const { currentTarget: target } = event;
             if(target) target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
           });
         }
-      }, [])
+      }, []);
 
         return (
             <div className={classes.Question}>
                 <div className={classes.header}><span className={classes['hat-image']}></span>Hat Chat</div>
                 <div className={styles.Chat} ref={chatEl}>
-                    {messages.map((m,key) => (
+                    {messageState ? messageState.map((m,key) => (
                     <div key={key}>
                         <Chatbox
                         message={m.message}
                         fromUser={m.fromUser}
                         /> 
                    </div>
-                    ))}                    
+                    )): null}                    
                 </div>                       
                 <div className={classes.questions}>
                     <div>
