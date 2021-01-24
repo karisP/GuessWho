@@ -10,7 +10,7 @@
     border-radius: 0px 0px 10px 10px;
 }
 
-.questions div:first-child{
+.questions div{
     display: flex;
     width: 100%;
     margin-bottom: 5px;
@@ -30,6 +30,7 @@ select:first-child{
 }
 
 input{
+    flex: 1;
     border:1px solid darkslategray;
     margin-right: 5px;
 }
