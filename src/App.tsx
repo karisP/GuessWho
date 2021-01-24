@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 import Character from './components/Character/Character';
-import Question from './components/Question/Question';
+import Chatbot from './components/Chatbot/Chatbot';
 //import Chat from './components/Chat/Chat';
 import harry from './images/harry_potter/harry.jpg';
 import hermione from './images/harry_potter/hermione.jpg';
@@ -29,13 +29,6 @@ import myrtle from './images/harry_potter/myrtle.jpg';
 import moody from './images/harry_potter/moody.jpg';
 import Modal from './components/Modal/Modal';
 import StartModal from './components/Modal/StartModal';
-
-interface Character
-{
-    name: '';
-    img: '';
-
-}
 
 export interface ICharacter{
   id: number;
@@ -137,7 +130,7 @@ const App = () => {
               })}
             </div>
             <div className="sidebar">
-              <Question character={dbCharacter} onWin={onWin} win={win} onCountQuestions={onCountQuestions}/>
+              <Chatbot character={dbCharacter} onWin={onWin} win={win} onCountQuestions={onCountQuestions}/>
             </div>
           </div>
 
