@@ -49,7 +49,7 @@ const Question = (props: IProps) => {
             } else if (selectedCategory.id === 2) {
                 response = attribute === props.character.age;
             } else if (selectedCategory.id === 3) {
-                response = attribute === props.character.gender;
+                response = attribute === props.character.gender.trim();
             } else if (selectedCategory.id === 4) {
                 response = attribute === props.character.species;
             } else if (selectedCategory.id === 5) {
