@@ -8,6 +8,8 @@ interface IProps {
     onWin: (win: boolean) => void;
     win: boolean | null;
     onCountQuestions: () => void;
+    minimize: boolean;
+    setMinimize: (arg: boolean) => void;
 }
 
 interface IMessage {
@@ -39,7 +41,7 @@ const Chatbot = (props: IProps) => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}><span className={styles['hat-image']}></span>Hat Chat</div>
+            <div className={styles.header}><span className={styles['hat-image']}></span>Hat Chat <button onClick={() => props.setMinimize(true)}/></div>
             <div className={styles.chat} ref={chatEl}>
                 {messageState ? messageState.map((m, key) => (
                     <div key={key} className={!m.fromUser ? styles.chatbox : styles['user-chatbox']}>

@@ -62,7 +62,7 @@ const App = () => {
   const [win, setWin] = React.useState<boolean | null>(null);
   const [questionCount, setQuestionCount] = React.useState<number>(0);
   const [closeStartModal, setCloseStartModal] = React.useState<boolean>(false);
-
+  const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(false);
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
       let randomInt = Math.floor(Math.random() * 24); 
@@ -129,9 +129,10 @@ const App = () => {
                 )
               })}
             </div>
-            <div className="sidebar">
-              <Chatbot character={dbCharacter} onWin={onWin} win={win} onCountQuestions={onCountQuestions}/>
+            <div className={minimizeChatbot ? "hidden" : "sidebar"}>
+              <Chatbot character={dbCharacter} onWin={onWin} win={win} onCountQuestions={onCountQuestions} minimize={minimizeChatbot} setMinimize={setMinimizeChatbot}/>
             </div>
+            <button className="hat-btn" onClick={() => setMinimizeChatbot(false)}>?</button>
           </div>
 
         </header>

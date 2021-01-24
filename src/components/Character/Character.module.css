@@ -1,58 +1,119 @@
 .character{
-    padding: 10px 5px;
-    width: 14.6%;
+  padding: 10px 5px;
+  width: 14.6%;
 }
 
 .flipBox img{
-    width: 150px;
-    height: 200px;
+  width: 60px;
+  height: 100px;
+}
+
+/* FLIP STYLES */
+.flipBox {
+  background-color: transparent;
+  width: 60px;
+  height: 100px;
+  perspective: 1000px;
+  padding: 10px;
+}
+
+.flipBoxInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flipOver{
+  transform: rotateY(180deg);
+}
+
+.flipBoxFront, .flipBoxBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+
+.flipBoxBack {
+  transform: rotateY(180deg);
+}
+
+.name{
+  font-size: 10px;
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  color:black;
+  margin-bottom: 0px;
+  padding: 2px;
+  width: 57px;
+  font-family: 'Gochi Hand', cursive; 
+  }
+
+@media screen and (min-width:768px){ 
+.character{
+  padding: 10px 5px;
+  width: 14.6%;
+}
+
+.flipBox img{
+  width: 150px;
+  height: 200px;
 }
 
 
 /* FLIP STYLES */
 .flipBox {
-    background-color: transparent;
-    width: 150px;
-    height: 200px;
-    perspective: 1000px;
-    padding: 10px;
-  }
-  
-  .flipBoxInner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-  }
-  
- .flipOver{
-    transform: rotateY(180deg);
-  }
-  
-  .flipBoxFront, .flipBoxBack {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-  }
-  
-  
-  .flipBoxBack {
-    transform: rotateY(180deg);
-  }
+  background-color: transparent;
+  width: 150px;
+  height: 200px;
+  perspective: 1000px;
+  padding: 10px;
+}
 
-  .name{
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: white;
-    color:black;
-    margin-bottom: 0px;
-    padding: 2px;
+.flipBoxInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flipOver{
+  transform: rotateY(180deg);
+}
+
+.flipBoxFront, .flipBoxBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+
+.flipBoxBack {
+  transform: rotateY(180deg);
+}
+
+.name{
+  font-size: unset;
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  color:black;
+  margin-bottom: 0px;
+  padding: 2px;
     width: 146px;
     font-family: 'Gochi Hand', cursive;
-
+    
   }
+}

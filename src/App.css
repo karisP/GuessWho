@@ -43,3 +43,18 @@
 .outer{
   display: flex;
 }
+
+.hat-btn{
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  font-size: 50px;
+  background-color:  #ebc934;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.hidden{
+  display: none;
+}
