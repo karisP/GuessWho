@@ -11,13 +11,13 @@ interface IProps {
 }
 
 const questions = (category: ICategory, attribute: string) => [
-    `Does my character have ${attribute} ${category.title.toLocaleLowerCase()}?`,
-    `Does my character wear ${attribute}?`,
-    `Is my character ${attribute}?`,
-    `Is my character of the ${attribute} ${category.title.toLowerCase()}?`,
-    `Is my character a ${attribute}?`,
-    `Does my character have ${category.title.toLowerCase()}?`,
-    `Is my character's ${category.title.toLowerCase()} a ${attribute}?`,
+    `Does your character have ${attribute} ${category.title.toLocaleLowerCase()}?`,
+    `Does your character wear ${attribute}?`,
+    `Is your character ${attribute}?`,
+    `Is your character of the ${attribute} ${category.title.toLowerCase()}?`,
+    `Is your character a ${attribute}?`,
+    `Does your character have ${category.title.toLowerCase()}?`,
+    `Is your character's ${category.title.toLowerCase()} a ${attribute}?`,
 ];
 
 const Question = (props: IProps) => {
