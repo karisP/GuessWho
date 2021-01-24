@@ -8,9 +8,9 @@ interface IProps {
 
 const Chatbox = (props: IProps) => {
     return (
-        <div className={!props.fromUser ? styles.chatbox : styles['user-chatbox']}>
+        <>
             {props.message}
-        </div>
+        </>
     )
 }
 

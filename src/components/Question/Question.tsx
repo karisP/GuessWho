@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import classes from './Question.module.css';
 import { ICharacter } from '../../App';
 import styles from '../Chat/Chat.module.css';
-import Chatbox from '../Chat/Chatbox';
+//import Chatbox from '../Chat/Chatbox';
 
 interface IProps{
     character: ICharacter | null;
@@ -53,49 +53,14 @@ const Question = (props: IProps) => {
     const [selectedAttribute, setSelectedAttribute] = React.useState<string | null>(null);
     const [response, setResponse] = React.useState<boolean | undefined>();
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
-    const messages: IMessage[] = [{message: "Hello student, please select from the below categories and attributes to ask me questions.", fromUser: false}];
-    const [messageState, setMessageState] = React.useState<IMessage[]>();
-//attempt to provide ref memory logic
-    let oldMessagesRef = useRef<IMessage[]|null>(null);
-    let changed = false;
+    const [messageState, setMessageState] = React.useState<IMessage[]>([{message: "Hello student, please select from the below categories and attributes to ask me questions.", fromUser: false}]);
 
-    const newMessages = messages.slice(0);
-
-    if(messages !== oldMessagesRef.current){
-        console.log("messages !== oldMessagesRef.current", messages !== oldMessagesRef.current)
-        const oldMessages = oldMessagesRef.current;
-        oldMessagesRef.current = messages;
-        console.log("oldMessages", oldMessages);
-        if(oldMessages){
-            newMessages.push(...oldMessages);
-            changed = true;
-        } else{
-            changed = false;
-        }
-        //console.log("oldMessages", oldMessages);
+    const addMessagetoState = (message: string, fromUser: boolean) => {
+        setMessageState(prevState => (
+             [...prevState, {message: message, fromUser: fromUser}]
+          ))
+        //console.log("addMessagetoState", messageState);
     }
-    console.log("oldMessagesRef.current", oldMessagesRef.current);
-    console.log("changed", changed);
-    console.log("newMessages", newMessages);
-    // useEffect(() => {
-    //     setMessageState(messages);
-    // },[changed, messages]);
-    //console.log(messageState);
-////========================================
-
-
-
-    const addMessagetoState = (message: string, fromUser: boolean, delay: boolean) => {
-        messages.push({message: message, fromUser: fromUser});
-        setMessageState(messages);
-        console.log("addMessagetoState", messages);
-    }
-
-    // const delayedMessagetoState = (message: string, fromUser: boolean, delay: boolean) => {
-    //     console.log("delayedMessage", [...messages], delay);
-    //     const timeout = setTimeout(() => setMessages([...messages, {message: message, fromUser: fromUser}]), 3000);
-    //     return () => clearTimeout(timeout);
-    // }
 
     const onChangeCategory = (e: React.FormEvent<HTMLSelectElement>) => {
         if(selectedAttribute) setSelectedAttribute(null);
@@ -105,8 +70,8 @@ const Question = (props: IProps) => {
     const onChangeAttribute = (e: React.FormEvent<HTMLSelectElement>) => {
         setSelectedAttribute(e.currentTarget.value.toLowerCase());
         if(selectedCategory){
-            console.log("selectedCategory and change attribute");
-            addMessagetoState(questions(selectedCategory,e.currentTarget.value.toLowerCase())[selectedCategory.questionId], true, false);
+            //console.log("selectedCategory and change attribute");
+            addMessagetoState(questions(selectedCategory,e.currentTarget.value.toLowerCase())[selectedCategory.questionId], true);
         }
         submitQuestion();
     }
@@ -139,7 +104,7 @@ const Question = (props: IProps) => {
                 setResponse(selectedAttribute.toLowerCase() === props.character.definingFeature);
             }
         }
-        response === true ? setTimeout(() => addMessagetoState("Yes", false, true), 3000) : setTimeout(() => addMessagetoState("No", false, true),3000);
+        response === true ? setTimeout(() => addMessagetoState("Yes", false), 3000) : setTimeout(() => addMessagetoState("No", false),3000);
     }
 
     const onChangeFinal = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -147,12 +112,12 @@ const Question = (props: IProps) => {
     }
 
     const onSubmitFinal = () => {
-        addMessagetoState(finalAnswer, true, false);
+        addMessagetoState(finalAnswer, true);
         if(props.character && (finalAnswer.toLowerCase() === props.character.name.toLowerCase())){
             props.onWin(true);
         }else{
             props.onWin(false);
-            addMessagetoState("Try again", false, true);
+            addMessagetoState("Try again", false);
         }
     }
 
@@ -171,11 +136,8 @@ const Question = (props: IProps) => {
                 <div className={classes.header}><span className={classes['hat-image']}></span>Hat Chat</div>
                 <div className={styles.Chat} ref={chatEl}>
                     {messageState ? messageState.map((m,key) => (
-                    <div key={key}>
-                        <Chatbox
-                        message={m.message}
-                        fromUser={m.fromUser}
-                        /> 
+                    <div key={key} className={!m.fromUser ? styles.chatbox : styles['user-chatbox']}>
+                        {m.message}
                    </div>
                     )): null}                    
                 </div>                       
