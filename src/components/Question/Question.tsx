@@ -50,8 +50,6 @@ const Question = (props: IProps) => {
     
     const chatEl = useRef<HTMLDivElement | null>(null);
     const [selectedCategory, setSelectedCategory] = React.useState<ICategory | undefined>();
-    const [selectedAttribute, setSelectedAttribute] = React.useState<string | null>(null);
-    const [response, setResponse] = React.useState<boolean | undefined>();
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
     const [messageState, setMessageState] = React.useState<IMessage[]>([{message: "Hello student, please select from the below categories and attributes to ask me questions.", fromUser: false}]);
 
@@ -59,52 +57,55 @@ const Question = (props: IProps) => {
         setMessageState(prevState => (
              [...prevState, {message: message, fromUser: fromUser}]
           ))
-        //console.log("addMessagetoState", messageState);
     }
 
     const onChangeCategory = (e: React.FormEvent<HTMLSelectElement>) => {
-        if(selectedAttribute) setSelectedAttribute(null);
         setSelectedCategory(categories[parseInt(e.currentTarget.value)]);
     }
 
     const onChangeAttribute = (e: React.FormEvent<HTMLSelectElement>) => {
-        setSelectedAttribute(e.currentTarget.value.toLowerCase());
         if(selectedCategory){
-            //console.log("selectedCategory and change attribute");
             addMessagetoState(questions(selectedCategory,e.currentTarget.value.toLowerCase())[selectedCategory.questionId], true);
         }
-        submitQuestion();
+        submitQuestion(e.currentTarget.value.toLowerCase());
     }
-    //console.log(messages);
 
-    const submitQuestion = () => {
+    const submitQuestion = (attribute: string) => {
         props.onCountQuestions();
-        if(props.character && selectedAttribute && selectedCategory){
+        let response = undefined;
+        if(props.character && attribute && selectedCategory){
             if(selectedCategory.id === 0){
-                setResponse(selectedAttribute.toLowerCase() === props.character.hairColor);
+                response = attribute === props.character.hairColor;
             }else if(selectedCategory.id === 1){
-                setResponse(selectedAttribute.toLowerCase() === props.character.accessory)
+                response = attribute === props.character.accessory;
             } else if(selectedCategory.id === 2){
-                setResponse(selectedAttribute.toLowerCase() === props.character.age);
+                response = attribute === props.character.age;
             } else if(selectedCategory.id === 3){
-                setResponse(selectedAttribute.toLowerCase() === props.character.gender);
+                response = attribute === props.character.gender;
             } else if(selectedCategory.id === 4){
-                setResponse(selectedAttribute.toLowerCase() === props.character.species);
+                response = attribute === props.character.species;
             } else if(selectedCategory.id === 5){
-                setResponse(selectedAttribute.toLowerCase() === props.character.role);
+                response = attribute === props.character.role;
             } else if(selectedCategory.id === 6){
-                setResponse(props.character.facialHair);
+                response = props.character.facialHair;
             } else if(selectedCategory.id === 7){
-                setResponse(selectedAttribute.toLowerCase() === props.character.house);
+                response = attribute === props.character.house;
             } else if(selectedCategory.id === 8){
-                setResponse(selectedAttribute.toLowerCase() === props.character.hairLength);
+                response = attribute === props.character.hairLength;
             } else if(selectedCategory.id === 9){
-                setResponse(selectedAttribute.toLowerCase() === props.character.hairType);
+                response = attribute === props.character.hairType;
             } else if(selectedCategory.id === 10){
-                setResponse(selectedAttribute.toLowerCase() === props.character.definingFeature);
+                response = attribute === props.character.definingFeature;
             }
         }
-        response === true ? setTimeout(() => addMessagetoState("Yes", false), 3000) : setTimeout(() => addMessagetoState("No", false),3000);
+
+        response !== undefined ?
+            response === true ?
+                setTimeout(() => addMessagetoState("Yes", false), 3000)
+                :
+                setTimeout(() => addMessagetoState("No", false), 3000)
+            :
+            setTimeout(() => addMessagetoState("I don't know", false), 3000);
     }
 
     const onChangeFinal = (e: React.ChangeEvent<HTMLInputElement>) => {
