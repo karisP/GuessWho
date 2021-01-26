@@ -58,6 +58,7 @@
   font-size: 50px;
   background-color:  #ebc934;
   border-radius: 50%;
+  border-color: transparent;
   width: 100px;
   height: 100px;
 }

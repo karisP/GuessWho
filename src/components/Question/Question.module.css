@@ -5,7 +5,7 @@
     align-items: center;
     flex-direction: column;
     padding: 10px;
-    height: 90px;
+    height: 70px;
     background-color: #ededed;
     border-radius: 0px 0px 10px 10px;
 }
@@ -13,7 +13,12 @@
 .questions div{
     display: flex;
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.questions form{
+    display: flex;
+    width: 100%; 
 }
 
 select{
@@ -25,6 +30,12 @@ select, input{
     border-radius: 10px;
 }
 
+select:focus, input:focus{
+    outline:none;
+    border: 1px solid #ebc934;
+    box-shadow: 0px 0px 7px #ebc934;
+}
+
 select:first-child{
     margin-right: 5px;
 }
@@ -32,5 +43,22 @@ select:first-child{
 input{
     flex: 1;
     border:1px solid darkslategray;
-    margin-right: 5px;
+    position: relative;
+}
+
+form button{
+    border-radius: 0px 10px 10px 0px;
+    position: absolute;
+    height: 26px;
+    right: 30px;
+    width: 28px;
+    border-color: transparent transparent transparent #2F751C;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #2F751C;
+    background-image: url("data:image/svg+xml,%0A%3Csvg width='8' height='11' viewBox='0 0 8 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.35355 0.646447C4.15829 0.451184 3.84171 0.451184 3.64645 0.646447L0.464466 3.82843C0.269204 4.02369 0.269204 4.34027 0.464466 4.53553C0.659728 4.7308 0.976311 4.7308 1.17157 4.53553L4 1.70711L6.82843 4.53553C7.02369 4.7308 7.34027 4.7308 7.53553 4.53553C7.7308 4.34027 7.7308 4.02369 7.53553 3.82843L4.35355 0.646447ZM4.5 11L4.5 1H3.5L3.5 11H4.5Z' fill='white'/%3E%3C/svg%3E%0A");
+}
+
+form button:hover{
+    background-image: url("data:image/svg+xml,%0A%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.70711 0.292892C8.31658 -0.097632 7.68342 -0.097632 7.29289 0.292892L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292892ZM9 16L9 0.999999H7L7 16H9Z' fill='white'/%3E%3C/svg%3E%0A");
 }

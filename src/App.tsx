@@ -65,6 +65,7 @@ const App = () => {
   const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(true);
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
+      //console.log(data);
       let randomInt = Math.floor(Math.random() * 24); 
       setDbCharacter(data[randomInt]);
     })
@@ -116,7 +117,7 @@ const App = () => {
 
     return (
       <div className="App">
-        <audio src={require('./media/themesong.mp3')} loop autoPlay/>
+        {/* <audio src={require('./media/themesong.mp3')} loop autoPlay/> */}
         {!closeStartModal ? <StartModal onCloseStartModal={onCloseStartModal}/> : null }
         {win ? <Modal onStartNewGame={onStartNewGame} submittedQuestionCount={questionCount} winCharacter={winCharacter} dbCharacter={dbCharacter}/> : null}
         <header className="App-header">

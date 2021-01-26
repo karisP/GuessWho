@@ -25,17 +25,19 @@ const Question = (props: IProps) => {
     const [finalAnswer, setFinalAnswer] = React.useState<string>("");
 
     const onChangeCategory = (e: React.FormEvent<HTMLSelectElement>) => {
-        setSelectedCategory(categories[parseInt(e.currentTarget.value)]);
+        let selectedCategory = categories[parseInt(e.currentTarget.value)];
+        if(selectedCategory) setSelectedCategory(selectedCategory);
     }
     const onChangeFinal = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFinalAnswer(e.currentTarget.value);
     }
 
     const onChangeAttribute = (e: React.FormEvent<HTMLSelectElement>) => {
-        if (selectedCategory) {
-            props.addMessageToState(questions(selectedCategory, e.currentTarget.value.toLowerCase())[selectedCategory.questionId], true);
+        if (selectedCategory !== undefined && selectedCategory.attributes) {
+            let selectedAttribute = selectedCategory.attributes[parseInt(e.currentTarget.value)];
+            props.addMessageToState(questions(selectedCategory, selectedAttribute.title.toLowerCase())[selectedAttribute.questionId], true);
+            submitQuestion(selectedAttribute.title.toLowerCase());
         }
-        submitQuestion(e.currentTarget.value.toLowerCase());
     }
 
     const submitQuestion = (attribute: string) => {
@@ -76,13 +78,16 @@ const Question = (props: IProps) => {
             setTimeout(() => props.addMessageToState("I don't know", false), 3000);
     }
 
-    const onSubmitFinal = () => {
+    const onSubmitFinal = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         props.addMessageToState(finalAnswer, true);
         if (props.character && (finalAnswer.toLowerCase() === props.character.name.toLowerCase())) {
             props.onWin(true);
+            setFinalAnswer("");
         } else {
             props.onWin(false);
             props.addMessageToState("Try again", false);
+            setFinalAnswer("");
         }
     }
     return (
@@ -96,15 +101,15 @@ const Question = (props: IProps) => {
                 </select>
                 <select onChange={(e) => onChangeAttribute(e)}>
                     <option hidden>Attributes</option>
-                    {selectedCategory ? categories[selectedCategory.id].attributes.map(attribute => {
-                        return (<option key={attribute} value={attribute}>{attribute}</option>)
+                    {selectedCategory ? categories[selectedCategory.id].attributes.map((attribute, index ) => {
+                        return (<option key={attribute.title} value={index}>{attribute.title}</option>)
                     }) : <option>Select category first</option>}
                 </select>
             </div>
-            <div>
+            <form onSubmit={onSubmitFinal}>
                 <input placeholder="Enter your final guess" value={finalAnswer} onChange={(e) => onChangeFinal(e)}></input>
-                <button type="button" onClick={onSubmitFinal}>Submit</button>
-            </div>
+                <button type="submit"/>
+            </form>
         </div>
 
     )
