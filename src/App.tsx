@@ -63,6 +63,7 @@ const App = () => {
   const [questionCount, setQuestionCount] = React.useState<number>(0);
   const [closeStartModal, setCloseStartModal] = React.useState<boolean>(false);
   const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(true);
+  const [resetCards, setResetCards] = React.useState<boolean>(false);
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
       //console.log(data);
@@ -113,6 +114,10 @@ const App = () => {
       setCloseStartModal(true);
     }
     
+    const onHandleResetCards = () => {
+      //do a functional setState here
+      setResetCards(!resetCards);
+    }
     const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
 
     return (
@@ -123,10 +128,11 @@ const App = () => {
         <header className="App-header">
           <h1>Guess Hoot</h1>
           <div className="outer">
+            <button className="reset-btn" onClick={() => onHandleResetCards()}>Reset</button>
             <div className={minimizeChatbot ? "full-width" : "wrapper"}>
               {characters.map((character, index) => {
                 return (
-                  <Character name={character.name} img={character.img} key={index} />
+                  <Character name={character.name} img={character.img} key={index} resetCards={resetCards} onHandleResetCards={onHandleResetCards}/>
                 )
               })}
             </div>

@@ -6,10 +6,17 @@ interface IProps {
   name: string;
   img: string;
   key: number;
+  resetCards: boolean;
+  onHandleResetCards: () => void;
 }
 
 const Character = (props: IProps) => {
   const [flipped, setFlipped] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if(props.resetCards === true) setFlipped(false);
+    //props.onHandleResetCards();
+  },[props.resetCards]);
 
   const flipCard = () => {
     setFlipped(!flipped);

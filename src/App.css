@@ -63,6 +63,11 @@
   height: 100px;
 }
 
+.reset-btn{
+  width:fit-content;
+  height: 20px;
+}
+
 .hidden{
   display: none;
 }
