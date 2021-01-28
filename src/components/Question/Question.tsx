@@ -18,7 +18,9 @@ const questions = (category: ICategory, attribute: string) => [
     `Is your character a ${attribute} ${attribute === "staff" ? "member" : ''}?`,
     `Does your character have ${category.title.toLowerCase()}?`,
     `Is your character ${attribute}?`,
-    `Is your character's ${category.title.toLowerCase()} their ${attribute}?`
+    `Is your character's ${category.title.toLowerCase()} their ${attribute}?`,
+    `Does your character have ${attribute}?`,
+
 ];
 
 const Question = (props: IProps) => {
