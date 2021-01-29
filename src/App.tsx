@@ -3,6 +3,7 @@ import './App.css';
 import Character from './components/Character/Character';
 import Chatbot from './components/Chatbot/Chatbot';
 //import Chat from './components/Chat/Chat';
+//import owleyes from './images/harry_potter/owleyes.svg';
 import harry from './images/harry_potter/harry.jpg';
 import hermione from './images/harry_potter/hermione.jpg';
 import ron from './images/harry_potter/ron.jpg';
@@ -60,10 +61,12 @@ function api<T>(url: string): Promise<T> {
 const App = () => {
   const [dbCharacter, setDbCharacter] = React.useState<ICharacter | null>(null);
   const [win, setWin] = React.useState<boolean | null>(null);
+  const [revealAnswer, setRevealAnswer] = React.useState<boolean>(false);
   const [questionCount, setQuestionCount] = React.useState<number>(0);
   const [closeStartModal, setCloseStartModal] = React.useState<boolean>(false);
   const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(true);
   const [resetCards, setResetCards] = React.useState<boolean>(false);
+
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
       //console.log(data);
@@ -124,7 +127,7 @@ const App = () => {
       <div className="App">
         {/* <audio src={require('./media/themesong.mp3')} loop autoPlay/> */}
         {!closeStartModal ? <StartModal onCloseStartModal={onCloseStartModal}/> : null }
-        {win ? <Modal onStartNewGame={onStartNewGame} submittedQuestionCount={questionCount} winCharacter={winCharacter} dbCharacter={dbCharacter}/> : null}
+        {(win || revealAnswer) ? <Modal onStartNewGame={onStartNewGame} revealAnswer={revealAnswer} submittedQuestionCount={questionCount} winCharacter={winCharacter} dbCharacter={dbCharacter}/> : null}
         <header className="App-header">
           <h1>Guess Hoot</h1>
           <div className="outer">
@@ -137,7 +140,15 @@ const App = () => {
               })}
             </div>
             <div className={minimizeChatbot ? "hidden" : "sidebar"}>
-              <Chatbot character={dbCharacter} onWin={onWin} win={win} onCountQuestions={onCountQuestions} minimize={minimizeChatbot} setMinimize={setMinimizeChatbot}/>
+              <Chatbot
+               character={dbCharacter}
+               onHandleResetCards={onHandleResetCards}
+               onWin={onWin}
+               onRevealAnswer={setRevealAnswer}
+               win={win}
+               onCountQuestions={onCountQuestions}
+               minimize={minimizeChatbot}
+               setMinimize={setMinimizeChatbot}/>
             </div>
             <button className={!minimizeChatbot ? "hidden" : "hat-btn"} onClick={() => setMinimizeChatbot(false)}>?</button>
           </div>

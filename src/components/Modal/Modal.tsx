@@ -8,6 +8,7 @@ interface IProps{
     dbCharacter: ICharacter | null;
     winCharacter: {name: string, img: string} | null;
     submittedQuestionCount: number;
+    revealAnswer: boolean;
 }
 
 const Modal = (props: IProps) => {
@@ -26,8 +27,18 @@ const Modal = (props: IProps) => {
             <div className={styles.close} onClick={props.onStartNewGame}/>
                 {props.winCharacter ? <img src={props.winCharacter.img} alt="character"/> : <img src={cardback} alt=""/>}
                 <div>
+                {
+                    props.revealAnswer ?
+                    <>
+                    <p>I was thinking of {props.dbCharacter ? props.dbCharacter.name : ""}!</p>
+                    <p>You have failed your O.W.L.s and 50 points will be subtracted from your house!</p>
+                    </>
+                    :
+                    <>
                     <p>You've guessed {props.dbCharacter ? props.dbCharacter.name : "WHO"} correctly in {props.submittedQuestionCount} guesses!</p>
                     <p>YOU'VE WON {points} points to your house!</p>
+                    </>
+                }
                     <button type="button" onClick={props.onStartNewGame}>New Game</button>
                 </div>
             </div>

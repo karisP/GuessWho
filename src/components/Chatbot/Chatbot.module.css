@@ -54,7 +54,7 @@
     overflow-y: scroll;
 }
 
-.chatbox{
+.chatbox div:first-child{
     position: relative;
     font-size: 14px;
     background-color: #fffd82;
@@ -64,7 +64,7 @@
     max-width: 60%;
     width: fit-content;
 }
-.chatbox::after {
+.chatbox div:first-child:after {
     content: " ";
     position: absolute;
     top: 100%; /* At the bottom of the tooltip */
@@ -74,20 +74,27 @@
     border-color: #fffd82 transparent transparent transparent;
   }
 
+  .btn-container{
+      margin-bottom: 15px;
+  }
+
 .user-chatbox{
-    position: relative;
     align-self: flex-end;
+    max-width: 60%;
+}
+
+.user-chatbox div:first-child{
+    position: relative;
     font-size: 14px;
     background-color: #1A3956;
     color: white;
     border-radius: 10px 10px 5px 10px;
     margin: 15px;
     padding: 5px;
-    max-width: 60%;
     width: fit-content;
 }
 
-.user-chatbox::before {
+.user-chatbox div:first-child:before {
     content: " ";
     position: absolute;
     top: 100%; /* At the bottom of the tooltip */

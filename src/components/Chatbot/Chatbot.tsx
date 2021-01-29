@@ -7,9 +7,11 @@ interface IProps {
     character: ICharacter | null;
     onWin: (win: boolean) => void;
     win: boolean | null;
+    onRevealAnswer: (arg: boolean) => void;
     onCountQuestions: () => void;
     minimize: boolean;
     setMinimize: (arg: boolean) => void;
+    onHandleResetCards: (arg: boolean) => void;
 }
 
 interface IMessage {
@@ -22,7 +24,6 @@ const Chatbot = (props: IProps) => {
 
     const chatEl = useRef<HTMLDivElement | null>(null);
     const [messageState, setMessageState] = React.useState<IMessage[]>([{ message: "Hello student, please select from the below categories and attributes to ask me questions.", fromUser: false }]);
-
     const addMessageToState = (message: string, fromUser: boolean) => {
         setMessageState(prevState => (
             [...prevState, { message: message, fromUser: fromUser }]
@@ -45,7 +46,13 @@ const Chatbot = (props: IProps) => {
             <div className={styles.chat} ref={chatEl}>
                 {messageState ? messageState.map((m, key) => (
                     <div key={key} className={!m.fromUser ? styles.chatbox : styles['user-chatbox']}>
+                    <div key={key}>
                         {m.message}
+                    </div>
+                    {m.message === "Try again" ? 
+                    <div className={styles['btn-container']}>
+                        <button onClick={() => props.onHandleResetCards(true)}>Flip cards</button><button onClick={() => props.onRevealAnswer(true)}>You win, tell me!</button>
+                        </div> : null}
                     </div>
                 )) : null}
             </div>
