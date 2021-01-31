@@ -30,6 +30,7 @@ import myrtle from './images/harry_potter/myrtle.jpg';
 import moody from './images/harry_potter/moody.jpg';
 import Modal from './components/Modal/Modal';
 import StartModal from './components/Modal/StartModal';
+import Toggle from './components/Toggle/Toggle';
 
 export interface ICharacter{
   id: number;
@@ -66,16 +67,26 @@ const App = () => {
   const [closeStartModal, setCloseStartModal] = React.useState<boolean>(false);
   const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(true);
   const [resetCards, setResetCards] = React.useState<boolean>(false);
+  const [twoPlayers, setTwoPlayers] = React.useState<boolean>(false);
+  const [dbCharacterTwo, setDbCharacterTwo] = React.useState<ICharacter | null>(null);
 
+  const generateRandomNumber = () => {
+    return Math.floor(Math.random() * 24);
+  }
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
       //console.log(data);
-      let randomInt = Math.floor(Math.random() * 24); 
+      let randomInt = generateRandomNumber(); 
       setDbCharacter(data[randomInt]);
+      if(twoPlayers) {         
+        let randomIntTwo = generateRandomNumber();
+        if(randomIntTwo === randomInt) randomIntTwo = generateRandomNumber();
+        setDbCharacterTwo(data[randomIntTwo]);
+      }
     })
-  }, []);
-  console.log(dbCharacter);
-
+  }, [twoPlayers]);
+  //console.log("dbCharacter", dbCharacter);
+  //console.log("dbCharacterTwo", dbCharacterTwo);
     const characters = [{ name: "Harry", img: harry },
       { name: "Hermione", img: hermione },
       { name: "Ron", img: ron },
@@ -123,13 +134,21 @@ const App = () => {
     }
     const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
 
+    const onTogglePlayer = () => {
+      console.log("onTogglePlayer", !twoPlayers);
+      setTwoPlayers(!twoPlayers);
+      console.log(dbCharacterTwo);
+    }
+
     return (
       <div className="App">
         {/* <audio src={require('./media/themesong.mp3')} loop autoPlay/> */}
         {!closeStartModal ? <StartModal onCloseStartModal={onCloseStartModal}/> : null }
-        {(win || revealAnswer) ? <Modal onStartNewGame={onStartNewGame} revealAnswer={revealAnswer} submittedQuestionCount={questionCount} winCharacter={winCharacter} dbCharacter={dbCharacter}/> : null}
+        {(win || revealAnswer) ? <Modal win={win} onClose={onStartNewGame} revealAnswer={revealAnswer} submittedQuestionCount={questionCount} winCharacter={winCharacter} dbCharacter={dbCharacter}/> : null}
         <header className="App-header">
           <h1>Guess Hoot</h1>
+          {/* <button onClick={onTogglePlayer}>Toggle Player</button> */}
+          <Toggle onToggle={onTogglePlayer}/>
           <div className="outer">
             <button className="reset-btn" onClick={() => onHandleResetCards()}/>
             <div className={minimizeChatbot ? "full-width" : "wrapper"}>
@@ -140,6 +159,7 @@ const App = () => {
               })}
             </div>
             <div className={minimizeChatbot ? "hidden" : "sidebar"}>
+              {!twoPlayers ?
               <Chatbot
                character={dbCharacter}
                onHandleResetCards={onHandleResetCards}
@@ -149,6 +169,9 @@ const App = () => {
                onCountQuestions={onCountQuestions}
                minimize={minimizeChatbot}
                setMinimize={setMinimizeChatbot}/>
+               :
+                <Modal winCharacter={winCharacter} twoPlayers onClose={() => setMinimizeChatbot(!minimizeChatbot)}/>
+              }
             </div>
             <button className={!minimizeChatbot ? "hidden" : "hat-btn"} onClick={() => setMinimizeChatbot(false)}>?</button>
           </div>

@@ -3,43 +3,54 @@ import { ICharacter } from '../../App';
 import styles from './Modal.module.css';
 import cardback from '../../images/harry_potter/cardback.png';
 
-interface IProps{
-    onStartNewGame: () => void;
-    dbCharacter: ICharacter | null;
-    winCharacter: {name: string, img: string} | null;
-    submittedQuestionCount: number;
-    revealAnswer: boolean;
+interface IProps {
+    onStartNewGame?: () => void;
+    dbCharacter?: ICharacter | null;
+    winCharacter: { name: string, img: string } | null;
+    win?: boolean | null;
+    submittedQuestionCount?: number;
+    revealAnswer?: boolean;
+    twoPlayers?: boolean;
+    setMinimizeCharacter?: (arg: boolean) => void;
+    onClose: () => void;
 }
 
 const Modal = (props: IProps) => {
     let points: number = 0;
-    if(props.submittedQuestionCount <= 5){
+    if (props.submittedQuestionCount && props.submittedQuestionCount <= 5) {
         points = 100;
-    } else if(props.submittedQuestionCount > 5 && props.submittedQuestionCount < 10){
+    } else if (props.submittedQuestionCount && props.submittedQuestionCount > 5 && props.submittedQuestionCount < 10) {
         points = 50;
-    }else{
+    } else {
         points = 25;
     }
-    
-    return(
-        <div className={styles.container} onClick={props.onStartNewGame}>
+
+    return (
+        <div className={styles.container} onClick={props.onClose}>
             <div className={styles.message}>
-            <div className={styles.close} onClick={props.onStartNewGame}/>
-                {props.winCharacter ? <img src={props.winCharacter.img} alt="character"/> : <img src={cardback} alt=""/>}
+                <div className={styles.close} onClick={props.onClose} />
+                {props.winCharacter ? <img src={props.winCharacter.img} alt="character" /> : <img src={cardback} alt="" />}
                 <div>
-                {
-                    props.revealAnswer ?
-                    <>
-                    <p>I was thinking of {props.dbCharacter ? props.dbCharacter.name : ""}!</p>
-                    <p>You have failed your O.W.L.s and 50 points will be subtracted from your house!</p>
-                    </>
-                    :
-                    <>
-                    <p>You've guessed {props.dbCharacter ? props.dbCharacter.name : "WHO"} correctly in {props.submittedQuestionCount} guesses!</p>
-                    <p>YOU'VE WON {points} points to your house!</p>
-                    </>
-                }
-                    <button type="button" onClick={props.onStartNewGame}>New Game</button>
+                    {
+                        props.revealAnswer ?
+                        <>
+                                <p>I was thinking of {props.dbCharacter ? props.dbCharacter.name : ""}!</p>
+                                <p>You have failed your O.W.L.s and 50 points will be subtracted from your house!</p>
+                            </>
+                            :
+                            props.win ?
+                            <>
+                                <p>You've guessed {props.dbCharacter ? props.dbCharacter.name : "WHO"} correctly in {props.submittedQuestionCount} guesses!</p>
+                                <p>YOU'VE WON {points} points to your house!</p>
+                            </>
+                            :
+                            null
+                    }
+                    {
+                        props.twoPlayers && props.winCharacter ?
+                            <p>You have {props.winCharacter.name}.</p> : null
+                    }
+                    {!props.twoPlayers ? <button type="button" onClick={props.onClose}>New Game</button> : null}
                 </div>
             </div>
         </div>
