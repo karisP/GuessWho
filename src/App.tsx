@@ -30,7 +30,7 @@ import myrtle from './images/harry_potter/myrtle.jpg';
 import moody from './images/harry_potter/moody.jpg';
 import Modal from './components/Modal/Modal';
 import StartModal from './components/Modal/StartModal';
-import Toggle from './components/Toggle/Toggle';
+//import Toggle from './components/Toggle/Toggle';
 
 export interface ICharacter{
   id: number;
