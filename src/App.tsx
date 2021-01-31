@@ -148,7 +148,7 @@ const App = () => {
         <header className="App-header">
           <h1>Guess Hoot</h1>
           {/* <button onClick={onTogglePlayer}>Toggle Player</button> */}
-          <Toggle onToggle={onTogglePlayer}/>
+          {/* <Toggle onToggle={onTogglePlayer}/> */}
           <div className="outer">
             <button className="reset-btn" onClick={() => onHandleResetCards()}/>
             <div className={minimizeChatbot ? "full-width" : "wrapper"}>
