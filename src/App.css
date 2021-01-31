@@ -30,7 +30,8 @@
   display: flex;
   flex-wrap:wrap;
   width: 100%;
-  padding: 10px 3%;
+  justify-content: center;
+  /* padding: 10px 3%; */
 }
 
 .full-width{
@@ -85,9 +86,17 @@
   display: none;
 }
 
-@media screen and (min-width: 768px){
+@media screen and (min-width: 1440px){
   .wrapper{
-    width: 78%;
-    padding: 10px 3%;
+    width: 74%;
+    padding: 10px 1%;
+    justify-content: unset;
+  }
+  .full-width{
+    justify-content: unset;
+  }
+  
+  .sidebar{
+    right: 10px;
   }
 }

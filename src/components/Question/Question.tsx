@@ -16,7 +16,7 @@ const questions = (category: ICategory, attribute: string) => [
     `Is your character an ${attribute}?`,
     `Is your character of the ${attribute} ${category.title.toLowerCase()}?`,
     `Is your character a ${attribute} ${attribute === "staff" ? "member" : ''}?`,
-    `Does your character have ${category.title.toLowerCase()}?`,
+    `Does your character have a ${attribute}?`,
     `Is your character ${attribute}?`,
     `Is your character's ${category.title.toLowerCase()} their ${attribute}?`,
     `Does your character have ${attribute}?`,
@@ -38,12 +38,14 @@ const Question = (props: IProps) => {
     const onChangeAttribute = (e: React.FormEvent<HTMLSelectElement>) => {
         if (selectedCategory !== undefined && selectedCategory.attributes) {
             let selectedAttribute = selectedCategory.attributes[parseInt(e.currentTarget.value)];
-            props.addMessageToState(questions(selectedCategory, selectedAttribute.title.toLowerCase())[selectedAttribute.questionId], true);
+            let selectedAttributeTitle = selectedCategory.id === 7 ? selectedAttribute.title : selectedAttribute.title.toLowerCase();
+            props.addMessageToState(questions(selectedCategory, selectedAttributeTitle)[selectedAttribute.questionId], true);
             submitQuestion(selectedAttribute.title.toLowerCase());
         }
     }
 
     const submitQuestion = (attribute: string) => {
+        console.log(attribute);
         props.onCountQuestions();
         let response = undefined;
         if (props.character && attribute && selectedCategory) {
