@@ -30,6 +30,7 @@ import myrtle from './images/harry_potter/myrtle.jpg';
 import moody from './images/harry_potter/moody.jpg';
 import Modal from './components/Modal/Modal';
 import StartModal from './components/Modal/StartModal';
+import Toggle from './components/Toggle/Toggle';
 //import Toggle from './components/Toggle/Toggle';
 
 export interface ICharacter{
@@ -148,7 +149,7 @@ const App = () => {
         <header className="App-header">
           <h1>Guess Hoot</h1>
           {/* <button onClick={onTogglePlayer}>Toggle Player</button> */}
-          {/* <Toggle onToggle={onTogglePlayer}/> */}
+          <Toggle onToggle={onTogglePlayer}/>
           <div className="outer">
             <button className="reset-btn" onClick={() => onHandleResetCards()}/>
             <div className={minimizeChatbot ? "full-width" : "wrapper"}>
