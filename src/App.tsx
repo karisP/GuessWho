@@ -70,7 +70,7 @@ const App = () => {
   const [resetCards, setResetCards] = React.useState<boolean>(false);
   const [twoPlayers, setTwoPlayers] = React.useState<boolean>(false);
   const [dbCharacterTwo, setDbCharacterTwo] = React.useState<ICharacter | null>(null);
-
+  console.log(dbCharacter, dbCharacterTwo);
   const generateRandomNumber = () => {
     return Math.floor(Math.random() * 24);
   }
