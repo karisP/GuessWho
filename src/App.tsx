@@ -1,9 +1,5 @@
 import * as React from 'react';
 import './App.css';
-import Character from './components/Character/Character';
-import Chatbot from './components/Chatbot/Chatbot';
-//import Chat from './components/Chat/Chat';
-//import owleyes from './images/harry_potter/owleyes.svg';
 import harry from './images/harry_potter/harry.jpg';
 import hermione from './images/harry_potter/hermione.jpg';
 import ron from './images/harry_potter/ron.jpg';
@@ -28,11 +24,13 @@ import lupin from './images/harry_potter/lupin.jpg';
 import trelawney from './images/harry_potter/trelawney.jpg';
 import myrtle from './images/harry_potter/myrtle.jpg';
 import moody from './images/harry_potter/moody.jpg';
-import Modal from './components/Modal/Modal';
-import StartModal from './components/Modal/StartModal';
-//import Toggle from './components/Toggle/Toggle';
+import { Route, Switch, useParams } from 'react-router-dom';
+import Main from './Main';
 
-export interface ICharacter{
+interface IParams{
+  id: string;
+}
+export interface ICharacter {
   id: number;
   name: string;
   hairType: string;
@@ -50,135 +48,90 @@ export interface ICharacter{
 
 function api<T>(url: string): Promise<T> {
   return fetch(url)
-  .then(response => {
-    if(!response.ok){
-      const errorMessage = 'Error loading data from' + url;
-      return Promise.reject(errorMessage);
-    }
-    return response.json().then(data => data as T);
-  })
+    .then(response => {
+      if (!response.ok) {
+        const errorMessage = 'Error loading data from' + url;
+        return Promise.reject(errorMessage);
+      }
+      return response.json().then(data => data as T);
+    })
 }
 
 const App = () => {
+  const params = useParams<IParams>();
   const [dbCharacter, setDbCharacter] = React.useState<ICharacter | null>(null);
-  const [win, setWin] = React.useState<boolean | null>(null);
-  const [revealAnswer, setRevealAnswer] = React.useState<boolean>(false);
-  const [questionCount, setQuestionCount] = React.useState<number>(0);
-  const [closeStartModal, setCloseStartModal] = React.useState<boolean>(false);
-  const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(true);
-  const [resetCards, setResetCards] = React.useState<boolean>(false);
   const [twoPlayers, setTwoPlayers] = React.useState<boolean>(false);
   const [dbCharacterTwo, setDbCharacterTwo] = React.useState<ICharacter | null>(null);
+  console.log(dbCharacter, dbCharacterTwo);
 
   const generateRandomNumber = () => {
     return Math.floor(Math.random() * 24);
   }
+
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
       //console.log(data);
-      let randomInt = generateRandomNumber(); 
+      let randomInt: number = 0;
+      if(params.id){
+        randomInt = parseInt(params.id);
+      }else{
+        randomInt = generateRandomNumber();
+      }
       setDbCharacter(data[randomInt]);
-      if(twoPlayers) {         
+      if (twoPlayers) {
         let randomIntTwo = generateRandomNumber();
-        if(randomIntTwo === randomInt) randomIntTwo = generateRandomNumber();
+        if (randomIntTwo === randomInt) randomIntTwo = generateRandomNumber();
         setDbCharacterTwo(data[randomIntTwo]);
       }
     })
-  }, [twoPlayers]);
+  }, [twoPlayers, params.id]);
   //console.log("dbCharacter", dbCharacter);
   //console.log("dbCharacterTwo", dbCharacterTwo);
-    const characters = [{ name: "Harry", img: harry },
-      { name: "Hermione", img: hermione },
-      { name: "Ron", img: ron },
-      { name: "Dobby", img: dobby },
-      { name: "Draco", img: draco },
-      { name: "Dudley", img: dudley },
-      { name: "Dumbledore", img: dumbledore },
-      { name: "Filch", img: filch },
-      { name: "Hagrid", img: hagrid }, 
-      { name: "Hedwig", img: hedwig }, 
-      { name: "Luna", img: luna }, 
-      { name: "Mcgonagall", img: mcgonagall }, 
-      { name: "Neville", img: neville }, 
-      { name: "Sirius", img: sirius }, 
-      { name: "Snape", img: snape }, 
-      { name: "Voldemort", img: voldemort }, 
-      { name: "Nagini", img: nagini }, 
-      { name: "Bellatrix", img: bellatrix }, 
-      { name: "Umbridge", img: umbridge }, 
-      { name: "Ginny", img: ginny }, 
-      { name: "Lupin", img: lupin }, 
-      { name: "Trelawney", img: trelawney }, 
-      { name: "Myrtle", img: myrtle }, 
-      { name: "Moody", img: moody } ]
+  const characters = [{ name: "Harry", img: harry },
+  { name: "Hermione", img: hermione },
+  { name: "Ron", img: ron },
+  { name: "Dobby", img: dobby },
+  { name: "Draco", img: draco },
+  { name: "Dudley", img: dudley },
+  { name: "Dumbledore", img: dumbledore },
+  { name: "Filch", img: filch },
+  { name: "Hagrid", img: hagrid },
+  { name: "Hedwig", img: hedwig },
+  { name: "Luna", img: luna },
+  { name: "Mcgonagall", img: mcgonagall },
+  { name: "Neville", img: neville },
+  { name: "Sirius", img: sirius },
+  { name: "Snape", img: snape },
+  { name: "Voldemort", img: voldemort },
+  { name: "Nagini", img: nagini },
+  { name: "Bellatrix", img: bellatrix },
+  { name: "Umbridge", img: umbridge },
+  { name: "Ginny", img: ginny },
+  { name: "Lupin", img: lupin },
+  { name: "Trelawney", img: trelawney },
+  { name: "Myrtle", img: myrtle },
+  { name: "Moody", img: moody }]
 
-    const onWin = (win:boolean) => {
-      setWin(win);
-    }
+  const onTogglePlayer = (arg: boolean) => {
+    setTwoPlayers(arg);
+    console.log("onTogglePlayer", !twoPlayers);
+    //setTwoPlayers(!twoPlayers);
+    console.log(dbCharacterTwo);
+  }
 
-    const onStartNewGame = () => {
-      window.location.reload();
-    }
+  const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
 
-    const onCountQuestions = () => {
-      setQuestionCount(questionCount + 1);
-    }
 
-    const onCloseStartModal = () => {
-      setCloseStartModal(true);
-    }
-    
-    const onHandleResetCards = () => {
-      //do a functional setState here
-      setResetCards(!resetCards);
-    }
-    const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
-
-    const onTogglePlayer = () => {
-      console.log("onTogglePlayer", !twoPlayers);
-      setTwoPlayers(!twoPlayers);
-      console.log(dbCharacterTwo);
-    }
-
-    return (
+  return (
       <div className="App">
-        {/* <audio src={require('./media/themesong.mp3')} loop autoPlay/> */}
-        {!closeStartModal ? <StartModal onCloseStartModal={onCloseStartModal}/> : null }
-        {(win || revealAnswer) ? <Modal win={win} onClose={onStartNewGame} revealAnswer={revealAnswer} submittedQuestionCount={questionCount} winCharacter={winCharacter} dbCharacter={dbCharacter}/> : null}
-        <header className="App-header">
-          <h1>Guess Hoot</h1>
-          {/* <button onClick={onTogglePlayer}>Toggle Player</button> */}
-          {/* <Toggle onToggle={onTogglePlayer}/> */}
-          <div className="outer">
-            <button className="reset-btn" onClick={() => onHandleResetCards()}/>
-            <div className={minimizeChatbot ? "full-width" : "wrapper"}>
-              {characters.map((character, index) => {
-                return (
-                  <Character name={character.name} img={character.img} key={index} resetCards={resetCards} onHandleResetCards={onHandleResetCards}/>
-                )
-              })}
-            </div>
-            <div className={minimizeChatbot ? "hidden" : "sidebar"}>
-              {!twoPlayers ?
-              <Chatbot
-               character={dbCharacter}
-               onHandleResetCards={onHandleResetCards}
-               onWin={onWin}
-               onRevealAnswer={setRevealAnswer}
-               win={win}
-               onCountQuestions={onCountQuestions}
-               minimize={minimizeChatbot}
-               setMinimize={setMinimizeChatbot}/>
-               :
-                <Modal winCharacter={winCharacter} twoPlayers onClose={() => setMinimizeChatbot(!minimizeChatbot)}/>
-              }
-            </div>
-            <button className={!minimizeChatbot ? "hidden" : "hat-btn"} onClick={() => setMinimizeChatbot(false)}>?</button>
-          </div>
-
-        </header>
+        <Switch>
+          <Route exact path="/:id" render={() =>
+             <Main characters={characters} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwo={dbCharacterTwo} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
+          <Route path="/" render={() =>
+             <Main characters={characters} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwo={dbCharacterTwo} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
+        </Switch>
       </div>
-    );
+  );
 
 }
 
