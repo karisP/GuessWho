@@ -61,8 +61,7 @@ const App = () => {
   const params = useParams<IParams>();
   const [dbCharacter, setDbCharacter] = React.useState<ICharacter | null>(null);
   const [twoPlayers, setTwoPlayers] = React.useState<boolean>(false);
-  const [dbCharacterTwo, setDbCharacterTwo] = React.useState<ICharacter | null>(null);
-  console.log(dbCharacter, dbCharacterTwo);
+  const [dbCharacterTwoId, setDbCharacterTwoId] = React.useState<number | null>(null);
 
   const generateRandomNumber = () => {
     return Math.floor(Math.random() * 24);
@@ -81,12 +80,12 @@ const App = () => {
       if (twoPlayers) {
         let randomIntTwo = generateRandomNumber();
         if (randomIntTwo === randomInt) randomIntTwo = generateRandomNumber();
-        setDbCharacterTwo(data[randomIntTwo]);
+        setDbCharacterTwoId(randomIntTwo);
       }
     })
   }, [twoPlayers, params.id]);
-  //console.log("dbCharacter", dbCharacter);
-  //console.log("dbCharacterTwo", dbCharacterTwo);
+  console.log("dbCharacter", dbCharacter);
+  console.log("dbCharacterTwo", dbCharacterTwoId);
   const characters = [{ name: "Harry", img: harry },
   { name: "Hermione", img: hermione },
   { name: "Ron", img: ron },
@@ -114,11 +113,10 @@ const App = () => {
 
   const onTogglePlayer = (arg: boolean) => {
     setTwoPlayers(arg);
-    console.log("onTogglePlayer", !twoPlayers);
-    //setTwoPlayers(!twoPlayers);
-    console.log(dbCharacterTwo);
+    console.log("onTogglePlayer", arg);
+    if(arg === false) setDbCharacterTwoId(null);
   }
-
+  
   const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
 
 
@@ -126,9 +124,9 @@ const App = () => {
       <div className="App">
         <Switch>
           <Route exact path="/:id" render={() =>
-             <Main characters={characters} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwo={dbCharacterTwo} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
+             <Main characters={characters} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwoId={dbCharacterTwoId} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
           <Route path="/" render={() =>
-             <Main characters={characters} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwo={dbCharacterTwo} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
+             <Main characters={characters} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwoId={dbCharacterTwoId} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
         </Switch>
       </div>
   );

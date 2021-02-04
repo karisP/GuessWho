@@ -11,7 +11,7 @@ import { ICharacter } from './App';
 interface IProps {
   characters: { img: string; name: string }[];
   dbCharacter: ICharacter | null;
-  dbCharacterTwo: ICharacter | null;
+  dbCharacterTwoId: number | null;
   onTogglePlayer: (arg: boolean) => void;
   twoPlayers: boolean;
   winCharacter: { img: string; name: string } | null;
@@ -44,7 +44,7 @@ const Main = (props: IProps) => {
 
   const onHandleResetCards = () => {
     //do a functional setState here
-    setResetCards(!resetCards);
+    setResetCards(prevState => !prevState);
   }
 
   return (
@@ -56,7 +56,7 @@ const Main = (props: IProps) => {
       <header className="App-header">
         <h1>Guess Hoot</h1>
         {/* <button onClick={onTogglePlayer}>Toggle Player</button> */}
-        <Toggle onToggle={props.onTogglePlayer} />
+        <Toggle onToggle={props.onTogglePlayer} onOpenModal={setMinimizeChatbot}/>
         <div className="outer">
           <button className="reset-btn" onClick={() => onHandleResetCards()} />
           <div className={minimizeChatbot ? "full-width" : "wrapper"}>
@@ -78,7 +78,7 @@ const Main = (props: IProps) => {
                 minimize={minimizeChatbot}
                 setMinimize={setMinimizeChatbot} />
               :
-              <Modal winCharacter={props.winCharacter} twoPlayers onClose={() => setMinimizeChatbot(!minimizeChatbot)} />
+              <Modal winCharacter={props.winCharacter} twoPlayers dbCharacterTwoId={props.dbCharacterTwoId} onClose={() => setMinimizeChatbot(!minimizeChatbot)} />
             }
           </div>
           <button className={!minimizeChatbot ? "hidden" : "hat-btn"} onClick={() => setMinimizeChatbot(false)}>?</button>

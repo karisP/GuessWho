@@ -6,6 +6,7 @@ import cardback from '../../images/harry_potter/cardback.png';
 interface IProps {
     onStartNewGame?: () => void;
     dbCharacter?: ICharacter | null;
+    dbCharacterTwoId?: number | null;
     winCharacter: { name: string, img: string } | null;
     win?: boolean | null;
     submittedQuestionCount?: number;
@@ -48,7 +49,11 @@ const Modal = (props: IProps) => {
                     }
                     {
                         props.twoPlayers && props.winCharacter ?
-                            <p>You have {props.winCharacter.name}.</p> : null
+                            <div>
+                                <p>You have {props.winCharacter.name}.</p>
+                                <p>Play with a friend by sending this link: /{props.dbCharacterTwoId}</p>
+                            </div>
+                             : null
                     }
                     {!props.twoPlayers ? <button type="button" onClick={props.onClose}>New Game</button> : null}
                 </div>
