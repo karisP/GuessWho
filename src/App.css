@@ -56,19 +56,20 @@
 
 .hat-btn{
   position: fixed;
+  color: white;
   right: 20px;
   bottom: 20px;
   font-size: 50px;
   background-color:  #ebc934;
   border-radius: 50%;
   border-color: transparent;
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
 }
 
 .reset-btn{
   position: absolute;
-  top: -20px;
+  top: -30px;
   width:fit-content;
   width: 28px;
   height: 27px;
@@ -95,7 +96,7 @@
   .full-width{
     justify-content: unset;
   }
-  
+
   .sidebar{
     right: 10px;
   }

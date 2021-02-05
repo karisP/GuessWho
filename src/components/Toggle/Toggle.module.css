@@ -1,8 +1,15 @@
+.toggle{
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
 .switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
+    margin: 5px;
   }
   
   .switch input { 
@@ -36,11 +43,11 @@
   }
   
   input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #ebc934;
   }
   
   input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #ebc934;
   }
   
   input:checked + .slider:before {

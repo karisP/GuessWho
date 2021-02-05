@@ -64,7 +64,8 @@ const Question = (props: IProps) => {
             } else if (selectedCategory.id === 6) {
                 response = props.character.facialHair;
             } else if (selectedCategory.id === 7) {
-                response = attribute === props.character.house;
+                console.log(attribute, props.character.house);
+                response = attribute === props.character.house.toLowerCase();
             } else if (selectedCategory.id === 8) {
                 response = attribute === props.character.hairLength;
             } else if (selectedCategory.id === 9) {

@@ -59,7 +59,7 @@ const Main = (props: IProps) => {
         <Toggle onToggle={props.onTogglePlayer} onOpenModal={setMinimizeChatbot}/>
         <div className="outer">
           <button className="reset-btn" onClick={() => onHandleResetCards()} />
-          <div className={minimizeChatbot ? "full-width" : "wrapper"}>
+          <div className={(minimizeChatbot || props.twoPlayers) ? "full-width" : "wrapper"}>
             {props.characters.map((character, index) => {
               return (
                 <Character name={character.name} img={character.img} key={index} resetCards={resetCards} onHandleResetCards={onHandleResetCards} />

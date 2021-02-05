@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ICharacter } from '../../App';
 import styles from './Modal.module.css';
 import cardback from '../../images/harry_potter/cardback.png';
+import { useLocation } from 'react-router-dom';
 
 interface IProps {
     onStartNewGame?: () => void;
@@ -17,6 +18,8 @@ interface IProps {
 }
 
 const Modal = (props: IProps) => {
+    const location = useLocation();
+    const ref = React.useRef<HTMLInputElement>(null);
     let points: number = 0;
     if (props.submittedQuestionCount && props.submittedQuestionCount <= 5) {
         points = 100;
@@ -25,6 +28,24 @@ const Modal = (props: IProps) => {
     } else {
         points = 25;
     }
+
+    const copyToClipboard = () => {
+        /* Get the text field */
+        let copyText: HTMLInputElement;
+        if(ref.current) {
+        copyText = ref.current;
+      
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+      
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+      
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+        }
+      }
 
     return (
         <div className={styles.container} onClick={props.onClose}>
@@ -50,8 +71,11 @@ const Modal = (props: IProps) => {
                     {
                         props.twoPlayers && props.winCharacter ?
                             <div>
-                                <p>You have {props.winCharacter.name}.</p>
-                                <p>Play with a friend by sending this link: /{props.dbCharacterTwoId}</p>
+                                <p>So you would rather play with another student than with the old Sorting Hat, hmmm?</p>
+                                <p>You have {props.winCharacter.name} and you must provide clues about the character to the other player.</p>
+                                <p>Invite your friend to play by sending this link:</p>
+                                <input type="text" value={`${location.pathname}${props.dbCharacterTwoId}`} ref={ref}/>
+                                <button onClick={copyToClipboard}>Copy text</button>
                             </div>
                              : null
                     }

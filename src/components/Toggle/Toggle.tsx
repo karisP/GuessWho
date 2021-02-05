@@ -16,7 +16,7 @@ const Toggle = (props: IProps) => {
     }
 
     return (
-        <div>
+        <div className={styles.toggle}>
             Solo
             <label className={styles.switch}>
                 <input type="checkbox" onChange={(e) => onChangeToggle(e)} checked={checked}/>
