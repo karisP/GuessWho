@@ -36,7 +36,7 @@ export interface ICharacter {
   hairType: string;
   hairColor: string;
   hairLength: string;
-  facialHair: boolean;
+  facialHair: string;
   definingFeature: string;
   gender: string;
   accessory: string;
