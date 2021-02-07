@@ -6,7 +6,11 @@ import Modal from './components/Modal/Modal';
 import StartModal from './components/Modal/StartModal';
 import Toggle from './components/Toggle/Toggle';
 import { ICharacter } from './App';
+import { useParams } from 'react-router-dom';
 
+interface IParams{
+  id: string;
+}
 
 interface IProps {
   characters: { img: string; name: string }[];
@@ -15,16 +19,24 @@ interface IProps {
   onTogglePlayer: (arg: boolean) => void;
   twoPlayers: boolean;
   winCharacter: { img: string; name: string } | null;
+  setParamsId: (arg: string) => void;
 }
 
 
 const Main = (props: IProps) => {
+  const params = useParams<IParams>();
   const [win, setWin] = React.useState<boolean | null>(null);
   const [revealAnswer, setRevealAnswer] = React.useState<boolean>(false);
   const [questionCount, setQuestionCount] = React.useState<number>(0);
-  const [closeStartModal, setCloseStartModal] = React.useState<boolean>(false);
-  const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(true);
+  const [closeStartModal, setCloseStartModal] = React.useState<boolean>(params.id ? true : false);
+  const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(params.id? false : true);
   const [resetCards, setResetCards] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    if(params.id) {
+      props.setParamsId(params.id);
+    }
+  })
 
   const onWin = (win: boolean) => {
     setWin(win);
@@ -43,8 +55,7 @@ const Main = (props: IProps) => {
   }
 
   const onHandleResetCards = () => {
-    //do a functional setState here
-    setResetCards(prevState => !prevState);
+    setResetCards(true);
   }
 
   return (
@@ -55,14 +66,16 @@ const Main = (props: IProps) => {
       {(win || revealAnswer) ? <Modal win={win} onClose={onStartNewGame} revealAnswer={revealAnswer} submittedQuestionCount={questionCount} winCharacter={props.winCharacter} dbCharacter={props.dbCharacter} /> : null}
       <header className="App-header">
         <h1>Guess Hoot</h1>
-        {/* <button onClick={onTogglePlayer}>Toggle Player</button> */}
-        <Toggle onToggle={props.onTogglePlayer} onOpenModal={setMinimizeChatbot}/>
+        <Toggle onToggle={props.onTogglePlayer} onOpenModal={setMinimizeChatbot} />
         <div className="outer">
+        <div className="tooltip">
           <button className="reset-btn" onClick={() => onHandleResetCards()} />
+          <span className="tooltiptext" id="myTooltip">Reset cards</span>
+        </div>
           <div className={(minimizeChatbot || props.twoPlayers) ? "full-width" : "wrapper"}>
             {props.characters.map((character, index) => {
               return (
-                <Character name={character.name} img={character.img} key={index} resetCards={resetCards} onHandleResetCards={onHandleResetCards} />
+                <Character name={character.name} img={character.img} key={index} resetCards={resetCards} setResetCards={setResetCards} />
               )
             })}
           </div>

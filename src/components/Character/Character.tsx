@@ -7,7 +7,7 @@ interface IProps {
   img: string;
   key: number;
   resetCards: boolean;
-  onHandleResetCards: () => void;
+  setResetCards: (arg: boolean) => void;
 }
 
 const Character = (props: IProps) => {
@@ -15,11 +15,11 @@ const Character = (props: IProps) => {
 
   React.useEffect(() => {
     if(props.resetCards === true) setFlipped(false);
-    //props.onHandleResetCards();
   },[props.resetCards]);
-
+  
   const flipCard = () => {
     setFlipped(!flipped);
+    props.setResetCards(false);
     console.log(flipped);
   }
   const divStyle = {

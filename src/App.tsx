@@ -24,12 +24,9 @@ import lupin from './images/harry_potter/lupin.jpg';
 import trelawney from './images/harry_potter/trelawney.jpg';
 import myrtle from './images/harry_potter/myrtle.jpg';
 import moody from './images/harry_potter/moody.jpg';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Main from './Main';
 
-interface IParams{
-  id: string;
-}
 export interface ICharacter {
   id: number;
   name: string;
@@ -58,7 +55,8 @@ function api<T>(url: string): Promise<T> {
 }
 
 const App = () => {
-  const params = useParams<IParams>();
+  const history = useHistory();
+  const [paramsId, setParamsId] = React.useState<string | null>(null);
   const [dbCharacter, setDbCharacter] = React.useState<ICharacter | null>(null);
   const [twoPlayers, setTwoPlayers] = React.useState<boolean>(false);
   const [dbCharacterTwoId, setDbCharacterTwoId] = React.useState<number | null>(null);
@@ -71,8 +69,9 @@ const App = () => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
       //console.log(data);
       let randomInt: number = 0;
-      if(params.id){
-        randomInt = parseInt(params.id);
+      if(paramsId){
+        randomInt = parseInt(paramsId);
+        setTwoPlayers(true);
       }else{
         randomInt = generateRandomNumber();
       }
@@ -83,9 +82,10 @@ const App = () => {
         setDbCharacterTwoId(randomIntTwo);
       }
     })
-  }, [twoPlayers, params.id]);
-  console.log("dbCharacter", dbCharacter);
-  console.log("dbCharacterTwo", dbCharacterTwoId);
+  }, [twoPlayers, paramsId]);
+  // console.log("dbCharacter", dbCharacter);
+  // console.log("dbCharacterTwo", dbCharacterTwoId);
+  // console.log('twoPlayers', twoPlayers);
   const characters = [{ name: "Harry", img: harry },
   { name: "Hermione", img: hermione },
   { name: "Ron", img: ron },
@@ -113,8 +113,10 @@ const App = () => {
 
   const onTogglePlayer = (arg: boolean) => {
     setTwoPlayers(arg);
-    console.log("onTogglePlayer", arg);
-    if(arg === false) setDbCharacterTwoId(null);
+    if(arg === false){
+      setDbCharacterTwoId(null);
+      history.replace("/");
+    }
   }
   
   const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
@@ -124,9 +126,9 @@ const App = () => {
       <div className="App">
         <Switch>
           <Route exact path="/:id" render={() =>
-             <Main characters={characters} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwoId={dbCharacterTwoId} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
+             <Main characters={characters} setParamsId={setParamsId} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwoId={dbCharacterTwoId} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
           <Route path="/" render={() =>
-             <Main characters={characters} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwoId={dbCharacterTwoId} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
+             <Main characters={characters} setParamsId={setParamsId} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwoId={dbCharacterTwoId} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
         </Switch>
       </div>
   );

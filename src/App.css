@@ -87,6 +87,11 @@
   display: none;
 }
 
+.tooltip .tooltiptext{
+  display: none;
+}
+
+
 @media screen and (min-width: 1440px){
   .wrapper{
     width: 74%;
@@ -100,4 +105,34 @@
   .sidebar{
     right: 10px;
   }
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  }
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    display: inline;
+    font-size: 14px;
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    top: -30px;
+    left: 34px;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+  
 }
