@@ -56,7 +56,7 @@ function api<T>(url: string): Promise<T> {
 
 const App = () => {
   const history = useHistory();
-  const [paramsId, setParamsId] = React.useState<string | null>(null);
+  const [paramsId, setParamsId] = React.useState<string | undefined>(undefined);
   const [dbCharacter, setDbCharacter] = React.useState<ICharacter | null>(null);
   const [twoPlayers, setTwoPlayers] = React.useState<boolean>(false);
   const [dbCharacterTwoId, setDbCharacterTwoId] = React.useState<number | null>(null);
@@ -69,7 +69,7 @@ const App = () => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
       //console.log(data);
       let randomInt: number = 0;
-      if(paramsId){
+      if(paramsId !== undefined){
         randomInt = parseInt(paramsId);
         setTwoPlayers(true);
       }else{
@@ -85,7 +85,7 @@ const App = () => {
   }, [twoPlayers, paramsId]);
   // console.log("dbCharacter", dbCharacter);
   // console.log("dbCharacterTwo", dbCharacterTwoId);
-  // console.log('twoPlayers', twoPlayers);
+  console.log('twoPlayers', twoPlayers);
   const characters = [{ name: "Harry", img: harry },
   { name: "Hermione", img: hermione },
   { name: "Ron", img: ron },

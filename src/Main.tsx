@@ -61,7 +61,7 @@ const Main = (props: IProps) => {
   return (
 
     <div className="App">
-      {/* <audio src={require('./media/themesong.mp3')} loop autoPlay/> */}
+      <audio src={require('./media/themesong.mp3')} loop autoPlay/>
       {!closeStartModal ? <StartModal onCloseStartModal={onCloseStartModal} /> : null}
       {(win || revealAnswer) ? <Modal win={win} onClose={onStartNewGame} revealAnswer={revealAnswer} submittedQuestionCount={questionCount} winCharacter={props.winCharacter} dbCharacter={props.dbCharacter} /> : null}
       <header className="App-header">

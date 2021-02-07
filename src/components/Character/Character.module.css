@@ -54,6 +54,7 @@
   padding: 2px;
   width: 57px;
   font-family: 'Gochi Hand', cursive; 
+  /* font-family: 'Aclonica', sans-serif; */
   }
 
 @media screen and (min-width:768px){ 
@@ -112,8 +113,6 @@
   color:black;
   margin-bottom: 0px;
   padding: 2px;
-    width: 146px;
-    font-family: 'Gochi Hand', cursive;
-    
+  width: 146px;  
   }
 }

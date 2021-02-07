@@ -11,7 +11,10 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
+  background-image: url('./images/harry_potter/rosie-fraser-1L71sPT5XKc-unsplash.jpg');
+  background-position: center;
+  background-size: cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -20,6 +23,10 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 25px;
+}
+
+.App-header h1{
+  font-family: 'Aclonica', sans-serif;
 }
 
 .App-link {
