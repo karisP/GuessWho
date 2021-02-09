@@ -42,17 +42,17 @@ const Chatbot = (props: IProps) => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}><span className={styles['hat-image']}></span>Hat Chat <button onClick={() => props.setMinimize(true)}/></div>
+            <div className={styles.header}><span className={styles['hat-image']}></span>Hat Chat <button onClick={() => props.setMinimize(true)} /></div>
             <div className={styles.chat} ref={chatEl}>
                 {messageState ? messageState.map((m, key) => (
                     <div key={key} className={!m.fromUser ? styles.chatbox : styles['user-chatbox']}>
-                    <div key={key}>
-                        {m.message}
-                    </div>
-                    {m.message === "Try again" ? 
-                    <div className={styles['btn-container']}>
-                        <button onClick={() => props.onHandleResetCards(true)}>Flip cards</button><button onClick={() => props.onRevealAnswer(true)}>You win, tell me!</button>
-                        </div> : null}
+                        <div key={key}>
+                            {m.message}
+                        </div>
+                        {m.message === "Try again" ?
+                            <div className={styles['btn-container']}>
+                                <button onClick={() => props.onHandleResetCards(true)}>Flip cards</button><button onClick={() => props.onRevealAnswer(true)}>You win, tell me!</button>
+                            </div> : null}
                     </div>
                 )) : null}
             </div>

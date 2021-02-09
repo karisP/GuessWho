@@ -29,7 +29,7 @@ const Question = (props: IProps) => {
 
     const onChangeCategory = (e: React.FormEvent<HTMLSelectElement>) => {
         let selectedCategory = categories[parseInt(e.currentTarget.value)];
-        if(selectedCategory) setSelectedCategory(selectedCategory);
+        if (selectedCategory) setSelectedCategory(selectedCategory);
     }
     const onChangeFinal = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFinalAnswer(e.currentTarget.value);
@@ -45,7 +45,6 @@ const Question = (props: IProps) => {
     }
 
     const submitQuestion = (attribute: string) => {
-        console.log(attribute);
         props.onCountQuestions();
         let response = undefined;
         if (props.character && attribute && selectedCategory) {
@@ -106,14 +105,14 @@ const Question = (props: IProps) => {
                 </select>
                 <select onChange={(e) => onChangeAttribute(e)}>
                     <option hidden>Attributes</option>
-                    {selectedCategory ? categories[selectedCategory.id].attributes.map((attribute, index ) => {
+                    {selectedCategory ? categories[selectedCategory.id].attributes.map((attribute, index) => {
                         return (<option key={attribute.title} value={index}>{attribute.title}</option>)
                     }) : <option>Select category first</option>}
                 </select>
             </div>
             <form onSubmit={onSubmitFinal}>
                 <input placeholder="Enter your final guess" value={finalAnswer} onChange={(e) => onChangeFinal(e)}></input>
-                <button type="submit"/>
+                <button type="submit" />
             </form>
         </div>
 

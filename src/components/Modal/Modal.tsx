@@ -4,9 +4,9 @@ import styles from './Modal.module.css';
 import cardback from '../../images/harry_potter/cardback.png';
 import { useLocation, useParams } from 'react-router-dom';
 
-interface IParams{
+interface IParams {
     id: string;
-  }
+}
 interface IProps {
     onStartNewGame?: () => void;
     dbCharacter?: ICharacter | null;

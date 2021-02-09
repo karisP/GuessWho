@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './Toggle.module.css';
-interface IParams{
+interface IParams {
     id: string;
-  }
-interface IProps{
+}
+interface IProps {
     onToggle: (arg: boolean) => void;
     onOpenModal: (arg: boolean) => void;
 }
@@ -15,21 +15,21 @@ const Toggle = (props: IProps) => {
 
     //pre-set the toggle to 2 Player
     React.useEffect(() => {
-        if(params.id) setChecked(true);
+        if (params.id) setChecked(true);
     }, [params.id]);
 
     console.log(params.id);
-    const onChangeToggle = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const onChangeToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(e.currentTarget.checked);
         props.onToggle(e.currentTarget.checked);
-        if(e.currentTarget.checked === true) props.onOpenModal(false);
+        if (e.currentTarget.checked === true) props.onOpenModal(false);
     }
 
     return (
         <div className={styles.toggle}>
             Solo
             <label className={styles.switch}>
-                <input type="checkbox" onChange={(e) => onChangeToggle(e)} checked={checked}/>
+                <input type="checkbox" onChange={(e) => onChangeToggle(e)} checked={checked} />
                 <span className={`${styles.slider} ${styles.round}`}></span>
             </label>
             2 Player

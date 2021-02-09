@@ -43,6 +43,7 @@ export interface ICharacter {
   house: string;
 }
 
+//strongly type the data that is retrieved
 function api<T>(url: string): Promise<T> {
   return fetch(url)
     .then(response => {
@@ -67,15 +68,17 @@ const App = () => {
 
   React.useEffect(() => {
     api<ICharacter[]>('http://localhost:3001').then(data => {
-      //console.log(data);
       let randomInt: number = 0;
-      if(paramsId !== undefined){
+      //set up data for two player version
+      if (paramsId !== undefined) {
         randomInt = parseInt(paramsId);
         setTwoPlayers(true);
-      }else{
+      } else {
+        //generate random int for solo version
         randomInt = generateRandomNumber();
       }
       setDbCharacter(data[randomInt]);
+      //generate link for player one to send to player two
       if (twoPlayers) {
         let randomIntTwo = generateRandomNumber();
         if (randomIntTwo === randomInt) randomIntTwo = generateRandomNumber();
@@ -113,24 +116,26 @@ const App = () => {
 
   const onTogglePlayer = (arg: boolean) => {
     setTwoPlayers(arg);
-    if(arg === false){
+    //remove two player param from url when toggle to solo version
+    if (arg === false) {
       setDbCharacterTwoId(null);
       history.replace("/");
     }
   }
-  
+
+  //get the local image for the character win modal
   const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
 
 
   return (
-      <div className="App">
-        <Switch>
-          <Route exact path="/:id" render={() =>
-             <Main characters={characters} setParamsId={setParamsId} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwoId={dbCharacterTwoId} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
-          <Route path="/" render={() =>
-             <Main characters={characters} setParamsId={setParamsId} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwoId={dbCharacterTwoId} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter}/>} />
-        </Switch>
-      </div>
+    <div className="App">
+      <Switch>
+        <Route exact path="/:id" render={() =>
+          <Main characters={characters} setParamsId={setParamsId} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwoId={dbCharacterTwoId} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter} />} />
+        <Route path="/" render={() =>
+          <Main characters={characters} setParamsId={setParamsId} twoPlayers={twoPlayers} dbCharacter={dbCharacter} dbCharacterTwoId={dbCharacterTwoId} onTogglePlayer={onTogglePlayer} winCharacter={winCharacter} />} />
+      </Switch>
+    </div>
   );
 
 }
