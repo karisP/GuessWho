@@ -88,7 +88,7 @@ const App = () => {
   }, [twoPlayers, paramsId]);
   // console.log("dbCharacter", dbCharacter);
   // console.log("dbCharacterTwo", dbCharacterTwoId);
-  console.log('twoPlayers', twoPlayers);
+  //console.log('twoPlayers', twoPlayers);
   const characters = [{ name: "Harry", img: harry },
   { name: "Hermione", img: hermione },
   { name: "Ron", img: ron },
@@ -118,6 +118,7 @@ const App = () => {
     setTwoPlayers(arg);
     //remove two player param from url when toggle to solo version
     if (arg === false) {
+      setParamsId(undefined);
       setDbCharacterTwoId(null);
       history.replace("/");
     }

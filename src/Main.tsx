@@ -29,7 +29,7 @@ const Main = (props: IProps) => {
   const [revealAnswer, setRevealAnswer] = React.useState<boolean>(false);
   const [questionCount, setQuestionCount] = React.useState<number>(0);
   const [closeStartModal, setCloseStartModal] = React.useState<boolean>(params.id ? true : false);
-  const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(params.id? false : true);
+  const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(params.id ? false : true);
   const [resetCards, setResetCards] = React.useState<boolean>(false);
 
   React.useEffect(() => {

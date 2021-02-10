@@ -9,7 +9,7 @@ interface IProps {
     win: boolean | null;
     onRevealAnswer: (arg: boolean) => void;
     onCountQuestions: () => void;
-    minimize: boolean;
+    minimize: boolean | undefined;
     setMinimize: (arg: boolean) => void;
     onHandleResetCards: (arg: boolean) => void;
 }

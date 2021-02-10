@@ -18,7 +18,6 @@ const Toggle = (props: IProps) => {
         if (params.id) setChecked(true);
     }, [params.id]);
 
-    console.log(params.id);
     const onChangeToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(e.currentTarget.checked);
         props.onToggle(e.currentTarget.checked);
