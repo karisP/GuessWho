@@ -118,3 +118,9 @@ button:first-child{
         max-width: 320px;
     }
 }
+
+@media only screen and (min-device-width: 480px) and (max-device-width: 812px) and (orientation: landscape) {
+    .chat{
+        height: 170px;
+    }
+}
