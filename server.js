@@ -1,8 +1,8 @@
 "use strict";
 
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 3001;
+const express = require('express')
+const app = express()
+const port = 3001
 
 const character_model = require('./connection');
 
