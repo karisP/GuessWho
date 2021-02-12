@@ -87,6 +87,7 @@ const Modal = (props: IProps) => {
                                         </>
                                         : null
                                 }
+                                <div className={styles.disclaimer}>Disclaimer: Please note no copywrite infringement is intended, and I do not own or claim to own the characters created by J.K. Rowling or music written by John Williams. This game is for fun and not to be reproduced or sold.</div>
                             </div>
                             : null
                     }

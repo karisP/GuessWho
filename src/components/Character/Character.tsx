@@ -20,8 +20,8 @@ const Character = (props: IProps) => {
   const flipCard = () => {
     setFlipped(!flipped);
     props.setResetCards(false);
-    console.log(flipped);
   }
+  
   const divStyle = {
     backgroundImage: 'url(' + props.img + ')',
     backgroundSize: 'cover',

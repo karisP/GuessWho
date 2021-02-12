@@ -25,7 +25,7 @@ const questions = (category: ICategory, attribute: string) => [
 
 const Question = (props: IProps) => {
     const [selectedCategory, setSelectedCategory] = React.useState<ICategory | undefined>();
-    const [finalAnswer, setFinalAnswer] = React.useState<string>("");
+    const [finalAnswer, setFinalAnswer] = React.useState<string | undefined>();
 
     const onChangeCategory = (e: React.FormEvent<HTMLSelectElement>) => {
         let selectedCategory = categories[parseInt(e.currentTarget.value)];
@@ -72,7 +72,7 @@ const Question = (props: IProps) => {
                 response = attribute === props.character.definingFeature;
             }
         }
-
+        //delay responses from AI chat so that it looks like it's thinking
         response !== undefined ?
             response === true ?
                 setTimeout(() => props.addMessageToState("Yes", false), 3000)
@@ -84,14 +84,16 @@ const Question = (props: IProps) => {
 
     const onSubmitFinal = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        props.addMessageToState(finalAnswer, true);
-        if (props.character && (finalAnswer.toLowerCase() === props.character.name.toLowerCase())) {
-            props.onWin(true);
-            setFinalAnswer("");
-        } else {
-            props.onWin(false);
-            props.addMessageToState("Try again", false);
-            setFinalAnswer("");
+        if(finalAnswer && finalAnswer !== ""){
+            props.addMessageToState(finalAnswer, true);
+            if (props.character && (finalAnswer.toLowerCase() === props.character.name.toLowerCase())) {
+                props.onWin(true);
+                setFinalAnswer("");
+            } else {
+                props.onWin(false);
+                props.addMessageToState("Try again", false);
+                setFinalAnswer("");
+            }
         }
     }
     return (
