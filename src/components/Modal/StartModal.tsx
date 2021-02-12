@@ -22,6 +22,7 @@ const StartModal = (props: IProps) => {
                     Turn over the cards of those you have eliminated. When you are ready, submit your final guess.
                     Beware refreshing the page lest you start over. Let the game begin!!</p>
                     <button type="button" onClick={props.onCloseStartModal}>Begin</button>
+                    <div className={styles.disclaimer}>Disclaimer: Please note no copywrite infringement is intended, and I do not own or claim to own the characters created by J.K. Rowling or music written by John Williams. This game is for fun and not to be reproduced or sold.</div>
                 </div>
             </div>
         </div>

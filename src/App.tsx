@@ -84,11 +84,9 @@ const App = () => {
         if (randomIntTwo === randomInt) randomIntTwo = generateRandomNumber();
         setDbCharacterTwoId(randomIntTwo);
       }
-    })
+    });
   }, [twoPlayers, paramsId]);
-  // console.log("dbCharacter", dbCharacter);
-  // console.log("dbCharacterTwo", dbCharacterTwoId);
-  //console.log('twoPlayers', twoPlayers);
+
   const characters = [{ name: "Harry", img: harry },
   { name: "Hermione", img: hermione },
   { name: "Ron", img: ron },
@@ -124,6 +122,27 @@ const App = () => {
     }
   }
 
+  const shuffleCharacters = (array: {name: string, img: string}[]) => {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
+  shuffleCharacters(characters);
+  
   //get the local image for the character win modal
   const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
 

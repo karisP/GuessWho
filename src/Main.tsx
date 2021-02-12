@@ -36,7 +36,7 @@ const Main = (props: IProps) => {
     if(params.id) {
       props.setParamsId(params.id);
     }
-  })
+  });
 
   const onWin = (win: boolean) => {
     setWin(win);
@@ -46,30 +46,18 @@ const Main = (props: IProps) => {
     window.location.reload();
   }
 
-  const onCountQuestions = () => {
-    setQuestionCount(questionCount + 1);
-  }
-
-  const onCloseStartModal = () => {
-    setCloseStartModal(true);
-  }
-
-  const onHandleResetCards = () => {
-    setResetCards(true);
-  }
-
   return (
 
     <div className="App">
-      <audio src={require('./media/themesong.mp3')} loop autoPlay/>
-      {!closeStartModal ? <StartModal onCloseStartModal={onCloseStartModal} /> : null}
+      {!closeStartModal ? <StartModal onCloseStartModal={() => setCloseStartModal(true)} /> : null}
       {(win || revealAnswer) ? <Modal win={win} onClose={onStartNewGame} revealAnswer={revealAnswer} submittedQuestionCount={questionCount} winCharacter={props.winCharacter} dbCharacter={props.dbCharacter} /> : null}
       <header className="App-header">
+      <audio src={require('./media/themesong.mp3')} loop autoPlay />
         <h1>Guess Hoot</h1>
         <Toggle onToggle={props.onTogglePlayer} onOpenModal={setMinimizeChatbot} />
         <div className="outer">
         <div className="tooltip">
-          <button className="reset-btn" onClick={() => onHandleResetCards()} />
+          <button className="reset-btn" onClick={() => setResetCards(true)} />
           <span className="tooltiptext" id="myTooltip">Reset cards</span>
         </div>
           <div className={(minimizeChatbot || props.twoPlayers) ? "full-width" : "wrapper"}>
@@ -83,18 +71,18 @@ const Main = (props: IProps) => {
             {!props.twoPlayers ?
               <Chatbot
                 character={props.dbCharacter}
-                onHandleResetCards={onHandleResetCards}
+                onHandleResetCards={() => setResetCards(true)}
                 onWin={onWin}
                 onRevealAnswer={setRevealAnswer}
                 win={win}
-                onCountQuestions={onCountQuestions}
+                onCountQuestions={() => setQuestionCount(questionCount + 1)}
                 minimize={minimizeChatbot}
                 setMinimize={setMinimizeChatbot} />
               :
               <Modal winCharacter={props.winCharacter} twoPlayers dbCharacterTwoId={props.dbCharacterTwoId} onClose={() => setMinimizeChatbot(!minimizeChatbot)} />
             }
           </div>
-          <button className={!minimizeChatbot ? "hidden" : "hat-btn"} onClick={() => setMinimizeChatbot(false)}>?</button>
+          <button className={!minimizeChatbot ? "hidden" : "question-btn"} onClick={() => setMinimizeChatbot(false)}>?</button>
         </div>
 
       </header>

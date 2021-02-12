@@ -21,9 +21,9 @@ interface IMessage {
 
 
 const Chatbot = (props: IProps) => {
-
     const chatEl = useRef<HTMLDivElement | null>(null);
     const [messageState, setMessageState] = React.useState<IMessage[]>([{ message: "Hello student, please select from the below categories and attributes to ask me questions.", fromUser: false }]);
+    
     const addMessageToState = (message: string, fromUser: boolean) => {
         setMessageState(prevState => (
             [...prevState, { message: message, fromUser: fromUser }]
