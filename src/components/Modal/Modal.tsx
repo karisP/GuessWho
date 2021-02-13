@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ICharacter } from '../../App';
 import styles from './Modal.module.css';
 import cardback from '../../images/harry_potter/cardback.png';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 interface IParams {
     id: string;
@@ -21,7 +21,6 @@ interface IProps {
 }
 
 const Modal = (props: IProps) => {
-    const location = useLocation();
     const params = useParams<IParams>();
     const ref = React.useRef<HTMLInputElement>(null);
     let points: number = 0;
