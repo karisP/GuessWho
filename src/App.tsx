@@ -27,6 +27,9 @@ import moody from './images/harry_potter/moody.jpg';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import Main from './Main';
 
+export interface ICharacterData {
+  characterData: ICharacter[]
+}
 export interface ICharacter {
   id: number;
   name: string;
@@ -44,12 +47,16 @@ export interface ICharacter {
 }
 
 //strongly type the data that is retrieved
-function api<T>(url: string): Promise<T> {
-  return fetch(url)
+function api<T>(): Promise<T> {
+  return fetch('/characterData.json', {
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+  })
     .then(response => {
-      console.log(response);
       if (!response.ok) {
-        const errorMessage = 'Error loading data from' + url;
+        const errorMessage = 'Error loading data from';
         return Promise.reject(errorMessage);
       }
       return response.json().then(data => data as T);
@@ -70,7 +77,7 @@ const App = () => {
   }
 
   React.useEffect(() => {
-    api<ICharacter[]>('/').then(data => {
+    api<ICharacterData>().then(data => {
       let randomInt: number = 0;
       //set up data for two player version
       if (paramsId !== undefined) {
@@ -80,7 +87,7 @@ const App = () => {
         //generate random int for solo version
         randomInt = generateRandomNumber();
       }
-      setDbCharacter(data[randomInt]);
+      setDbCharacter(data.characterData[randomInt]);
       //generate link for player one to send to player two
       if (twoPlayers) {
         let randomIntTwo = generateRandomNumber();
@@ -125,27 +132,27 @@ const App = () => {
     }
   }
 
-  const shuffleCharacters = (array: {name: string, img: string}[]) => {
+  const shuffleCharacters = (array: { name: string, img: string }[]) => {
     var currentIndex = array.length, temporaryValue, randomIndex;
-  
+
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-  
+
       // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
-  
+
       // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
-  
+
     return array;
   }
 
   shuffleCharacters(characters);
-  
+
   //get the local image for the character win modal
   const winCharacter = dbCharacter ? characters.filter(x => x.name === dbCharacter.name)[0] : null;
 
