@@ -47,6 +47,7 @@ export interface ICharacter {
 function api<T>(url: string): Promise<T> {
   return fetch(url)
     .then(response => {
+      console.log(response);
       if (!response.ok) {
         const errorMessage = 'Error loading data from' + url;
         return Promise.reject(errorMessage);
@@ -54,6 +55,8 @@ function api<T>(url: string): Promise<T> {
       return response.json().then(data => data as T);
     })
 }
+
+
 
 const App = () => {
   const history = useHistory();
@@ -67,7 +70,7 @@ const App = () => {
   }
 
   React.useEffect(() => {
-    api<ICharacter[]>('http://localhost:3001').then(data => {
+    api<ICharacter[]>('/').then(data => {
       let randomInt: number = 0;
       //set up data for two player version
       if (paramsId !== undefined) {

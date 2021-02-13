@@ -4,7 +4,7 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3001;
 
-const character_model = require('./connection');
+const character_model = require('./data');
 
 app.use(express.json())
 app.use(function (req, res, next) {
