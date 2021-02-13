@@ -46,7 +46,7 @@ const Question = (props: IProps) => {
 
     const submitQuestion = (attribute: string) => {
         props.onCountQuestions();
-        let response = undefined;
+        let response: boolean | undefined = undefined;
         if (props.character && attribute && selectedCategory) {
             if (selectedCategory.id === 0) {
                 response = attribute === props.character.hairColor;
