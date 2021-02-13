@@ -81,7 +81,7 @@ const Modal = (props: IProps) => {
                                     !params.id ?
                                         <>
                                             <p>Call a friend and invite them to play by sending this link:
-                                                 <input type="text" value={`${location.pathname}${props.dbCharacterTwoId}`} ref={ref} readOnly />
+                                                 <input type="text" value={`https://guess-hoot.herokuapp.com/${props.dbCharacterTwoId}`} ref={ref} readOnly />
                                             </p>
                                             <button onClick={copyToClipboard}>Copy text</button>
                                         </>
