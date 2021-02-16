@@ -28,6 +28,7 @@ const Main = (props: IProps) => {
   const [win, setWin] = React.useState<boolean | null>(null);
   const [revealAnswer, setRevealAnswer] = React.useState<boolean>(false);
   const [questionCount, setQuestionCount] = React.useState<number>(0);
+  const [guessCount, setGuessCount] = React.useState<number>(0);
   const [closeStartModal, setCloseStartModal] = React.useState<boolean>(params.id ? true : false);
   const [minimizeChatbot, setMinimizeChatbot] = React.useState<boolean>(params.id ? false : true);
   const [resetCards, setResetCards] = React.useState<boolean>(false);
@@ -50,7 +51,7 @@ const Main = (props: IProps) => {
 
     <div className="App">
       {!closeStartModal ? <StartModal onCloseStartModal={() => setCloseStartModal(true)} /> : null}
-      {(win || revealAnswer) ? <Modal win={win} onClose={onStartNewGame} revealAnswer={revealAnswer} submittedQuestionCount={questionCount} winCharacter={props.winCharacter} dbCharacter={props.dbCharacter} /> : null}
+      {(win || revealAnswer) ? <Modal win={win} onClose={onStartNewGame} revealAnswer={revealAnswer} guessCount={guessCount} submittedQuestionCount={questionCount} winCharacter={props.winCharacter} dbCharacter={props.dbCharacter} /> : null}
       <header className="App-header">
       <audio src={require('./media/themesong.mp3')} loop autoPlay />
         <h1>Guess Hoot</h1>
@@ -76,6 +77,7 @@ const Main = (props: IProps) => {
                 onRevealAnswer={setRevealAnswer}
                 win={win}
                 onCountQuestions={() => setQuestionCount(questionCount + 1)}
+                onCountGuesses={() => setGuessCount(guessCount + 1)}
                 minimize={minimizeChatbot}
                 setMinimize={setMinimizeChatbot} />
               :

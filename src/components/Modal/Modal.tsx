@@ -14,6 +14,7 @@ interface IProps {
     winCharacter: { name: string, img: string } | null;
     win?: boolean | null;
     submittedQuestionCount?: number;
+    guessCount?: number;
     revealAnswer?: boolean;
     twoPlayers?: boolean;
     setMinimizeCharacter?: (arg: boolean) => void;
@@ -65,7 +66,8 @@ const Modal = (props: IProps) => {
                             :
                             props.win ?
                                 <>
-                                    <p>You've guessed {props.dbCharacter ? props.dbCharacter.name : "WHO"} correctly in {props.submittedQuestionCount} guesses!</p>
+                                    <p>You've guessed {props.dbCharacter ? props.dbCharacter.name : "WHO"} correctly by asking {props.submittedQuestionCount} questions!</p>
+                                    <p>Number of wrong guesses: {props.guessCount}</p>
                                     <p>YOU'VE WON {points} points to your house!</p>
                                 </>
                                 :

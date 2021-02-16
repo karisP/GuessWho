@@ -7,6 +7,7 @@ interface IProps {
     addMessageToState: (message: string, fromUser: boolean) => void;
     character: ICharacter | null;
     onCountQuestions: () => void;
+    onCountGuesses: () => void;
     onWin: (win: boolean) => void;
 }
 
@@ -55,7 +56,7 @@ const Question = (props: IProps) => {
             } else if (selectedCategory.id === 2) {
                 response = attribute === props.character.age;
             } else if (selectedCategory.id === 3) {
-                response = attribute === props.character.gender.trim();
+                response = attribute === props.character.gender;
             } else if (selectedCategory.id === 4) {
                 response = attribute === props.character.species;
             } else if (selectedCategory.id === 5) {
@@ -63,7 +64,7 @@ const Question = (props: IProps) => {
             } else if (selectedCategory.id === 6) {
                 response = attribute === props.character.facialHair;
             } else if (selectedCategory.id === 7) {
-                response = attribute === props.character.house.toLowerCase();
+                response = props.character.house ? attribute === props.character.house.toLowerCase() : false;
             } else if (selectedCategory.id === 8) {
                 response = attribute === props.character.hairLength;
             } else if (selectedCategory.id === 9) {
@@ -90,8 +91,9 @@ const Question = (props: IProps) => {
                 props.onWin(true);
                 setFinalAnswer("");
             } else {
+                props.onCountGuesses();
                 props.onWin(false);
-                props.addMessageToState("Try again", false);
+                props.addMessageToState("Not quite. Better study harder for your O.W.L.s.", false);
                 setFinalAnswer("");
             }
         }

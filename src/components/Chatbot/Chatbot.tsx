@@ -9,6 +9,7 @@ interface IProps {
     win: boolean | null;
     onRevealAnswer: (arg: boolean) => void;
     onCountQuestions: () => void;
+    onCountGuesses: () => void;
     minimize: boolean | undefined;
     setMinimize: (arg: boolean) => void;
     onHandleResetCards: (arg: boolean) => void;
@@ -49,7 +50,7 @@ const Chatbot = (props: IProps) => {
                         <div key={key}>
                             {m.message}
                         </div>
-                        {m.message === "Try again" ?
+                        {m.message === "Not quite. Better study harder for your O.W.L.s." ?
                             <div className={styles['btn-container']}>
                                 <button onClick={() => props.onHandleResetCards(true)}>Flip cards</button><button onClick={() => props.onRevealAnswer(true)}>You win, tell me!</button>
                             </div> : null}
@@ -60,6 +61,7 @@ const Chatbot = (props: IProps) => {
                 addMessageToState={addMessageToState}
                 character={props.character}
                 onCountQuestions={props.onCountQuestions}
+                onCountGuesses={props.onCountGuesses}
                 onWin={props.onWin} />
         </div>
     )

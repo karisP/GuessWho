@@ -11,7 +11,7 @@
           "age": "child",
           "species": "wizard",
           "role": "student",
-          "house": "Griffindor",
+          "house": "Gryffindor",
           "id": 1,
           "facialHair": null
         },
@@ -26,7 +26,7 @@
           "age": "child",
           "species": "wizard",
           "role": "student",
-          "house": "Griffindor",
+          "house": "Gryffindor",
           "id": 2,
           "facialHair": null
         },
@@ -41,7 +41,7 @@
           "age": "child",
           "species": "wizard",
           "role": "student",
-          "house": "Griffindor",
+          "house": "Gryffindor",
           "id": 3,
           "facialHair": null
         },
@@ -56,7 +56,7 @@
           "age": "old",
           "species": "wizard",
           "role": "staff",
-          "house": "Griffindor",
+          "house": "Gryffindor",
           "id": 4,
           "facialHair": "beard"
         },
@@ -86,7 +86,7 @@
           "age": "child",
           "species": "wizard",
           "role": "student",
-          "house": "Griffindor",
+          "house": "Gryffindor",
           "id": 6,
           "facialHair": null
         },
@@ -146,7 +146,7 @@
           "age": "old",
           "species": "wizard",
           "role": "staff",
-          "house": "Griffindor",
+          "house": "Gryffindor",
           "id": 10,
           "facialHair": null
         },
@@ -161,7 +161,7 @@
           "age": "adult",
           "species": "wizard",
           "role": "staff",
-          "house": "Griffindor",
+          "house": "Gryffindor",
           "id": 11,
           "facialHair": "beard"
         },
@@ -175,8 +175,8 @@
           "accessory": null,
           "age": "adult",
           "species": "wizard",
-          "role": "staff",
-          "house": "Griffindor",
+          "role": null,
+          "house": "Gryffindor",
           "id": 12,
           "facialHair": "beard"
         },
@@ -296,7 +296,7 @@
           "age": "child",
           "species": "wizard",
           "role": "student",
-          "house": "Griffindor",
+          "house": "Gryffindor",
           "id": 20,
           "facialHair": null
         },
@@ -311,7 +311,7 @@
           "age": "adult",
           "species": "wizard",
           "role": "staff",
-          "house": "Griffindor",
+          "house": "Gryffindor",
           "id": 21,
           "facialHair": "mustache"
         },
