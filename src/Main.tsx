@@ -47,6 +47,8 @@ const Main = (props: IProps) => {
     window.location.reload();
   }
 
+  let h = window.innerHeight;
+
   return (
 
     <div className="App">
@@ -68,9 +70,10 @@ const Main = (props: IProps) => {
               )
             })}
           </div>
-          <div className={minimizeChatbot ? "hidden" : "sidebar"}>
+          <div className={minimizeChatbot ? "hidden" : "sidebar"} style={{height: h}}>
             {!props.twoPlayers ?
               <Chatbot
+                height={h}
                 character={props.dbCharacter}
                 onHandleResetCards={() => setResetCards(true)}
                 onWin={onWin}

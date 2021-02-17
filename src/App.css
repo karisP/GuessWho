@@ -53,6 +53,7 @@
   flex-direction: column;
   position:fixed;
   right: 0px;
+  top: 0px;
 }
 
 .outer{
@@ -93,11 +94,11 @@
   display: none;
 }
 
-@media only screen and (min-device-width: 480px) and (max-device-width: 812px) and (orientation: landscape) {
+/* @media only screen and (min-device-width: 480px) and (max-device-width: 812px) and (orientation: landscape) {
   .sidebar{
     top: 0;
   }
-}
+} */
 
 @media screen and (min-width: 1440px){
   .wrapper{
@@ -110,6 +111,7 @@
   }
 
   .sidebar{
+    top: unset;
     right: 10px;
   }
   .tooltip {

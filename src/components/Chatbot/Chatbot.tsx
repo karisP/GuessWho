@@ -4,6 +4,7 @@ import styles from './Chatbot.module.css';
 import Question from '../Question/Question';
 
 interface IProps {
+    height: number;
     character: ICharacter | null;
     onWin: (win: boolean) => void;
     win: boolean | null;
@@ -42,9 +43,9 @@ const Chatbot = (props: IProps) => {
     }, []);
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{height: props.height}}>
             <div className={styles.header}><span className={styles['hat-image']}></span>Hat Chat <button onClick={() => props.setMinimize(true)} /></div>
-            <div className={styles.chat} ref={chatEl}>
+            <div className={styles.chat} ref={chatEl} style={{height: props.height - 160}}>
                 {messageState ? messageState.map((m, key) => (
                     <div key={key} className={!m.fromUser ? styles.chatbox : styles['user-chatbox']}>
                         <div key={key}>
